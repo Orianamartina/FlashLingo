@@ -24,7 +24,7 @@ def germanWords(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 @api_view(['GET', 'POST'])
-def germanWordsById(request, id):
+def germanWordsById(request, id, format=None):
     if request.method == 'GET':
         try:
             foundWord = GermanWord.objects.get(pk=id)
