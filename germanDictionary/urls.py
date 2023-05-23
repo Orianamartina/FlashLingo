@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from dictApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('allwords/', views.germanWords),
+    path('allwords/<int:id>', views.germanWordsById)
 ]
