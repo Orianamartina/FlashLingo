@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class GermanWord(models.Model):
-    name = models.CharField(max_length=200)
+    word = models.CharField(max_length=200)
     article = models.CharField(max_length=200)
     types = models.CharField(max_length=200)
     translation1 = models.CharField(max_length=200)
@@ -15,3 +15,9 @@ class GermanWord(models.Model):
     def __str__(self):
         return self.name
 
+
+class User(models.Model):
+    email = models.EmailField
+    password = models.CharField(max_length=30)
+    birthDate = models.DateField
+    

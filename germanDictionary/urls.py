@@ -22,7 +22,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('allwords/', views.germanWords),
-    path('allwords/<int:id>', views.germanWordsById)
+    path('allwords/<int:id>', views.germanWordsById),
+    path('importdictionary/', views.importDictionary)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

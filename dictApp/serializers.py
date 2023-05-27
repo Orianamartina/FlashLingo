@@ -4,4 +4,4 @@ from .models import GermanWord
 class GermanWordSerializer(serializers.ModelSerializer):
     class Meta:
         model = GermanWord
-        fields = ['id', 'name', 'article', 'types', 'translation1', 'translation2', 'translation3', 'sentence1', 'sentence2', 'sentence3']
+        fields = ['id', 'word', 'article', 'types', 'translation1', 'translation2', 'translation3', 'sentence1', 'sentence2', 'sentence3'] 
