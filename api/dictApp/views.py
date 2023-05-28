@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import GermanWord
-from .serializers import GermanWordSerializer
+from .serializers import GermanWordSerializer, UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_framework import permissions
 from rest_framework import status
 import json
 
@@ -35,8 +38,19 @@ def germanWordsById(request, id, format=None):
         serializer = GermanWordSerializer(foundWord)
         return Response(serializer.data)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 
+def getLevel(request, level, format = None):
+    if level == 1:
+        items = GermanWord.objects.all()[:100]
+    if level == 2:
+        items = GermanWord.objects.all()[100:200]
+    if level == 3:
+        items = GermanWord.objects.all()[200:300]
+    serializer = GermanWordSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
 def importDictionary(request):
     if request.method == 'POST':
         germanDict = GermanWord.objects.all()
@@ -49,7 +63,7 @@ def importDictionary(request):
             # Connect to the MySQL database
             for entry in info:
                 word = {
-                    "id": entry["id"] + 5,
+                    "id": entry["id"],
                     "word": entry["German "],
                     "article": entry["Article"] or "null",
                     "types":  entry["Type"] or "null",
@@ -66,3 +80,8 @@ def importDictionary(request):
                     serializer.save()
             return Response(status=status.HTTP_201_CREATED)       
         
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]

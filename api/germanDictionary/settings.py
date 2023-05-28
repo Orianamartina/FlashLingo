@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'germanDictionary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'germandict',
+        'NAME': 'german_dictionary_app',
         'USER': 'postgres',
         'PASSWORD': 'rosita123',
         'HOST': 'localhost',
