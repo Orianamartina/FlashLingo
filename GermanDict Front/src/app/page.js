@@ -1,10 +1,17 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h2></h2>
+      <h1>Learn german fast!!</h1>
+      <h2>A new and  easy way to learn</h2>
+      <Link href={"login/"}>
+        <button>Find out more</button>
+      </Link>
+      
+      
     </main>
   )
 }
