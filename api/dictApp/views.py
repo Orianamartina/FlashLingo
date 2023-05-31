@@ -9,6 +9,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 import json
 
 # Create your views here. endpoints
@@ -84,11 +85,6 @@ def importDictionary(request):
 
 def manageUser(request):
     
-    if request.method == "GET":
-        user = User.objects.get(email=serializer.email)
-        serializer = UserSerializer(user)
-        
-        return Response(serializer.data, status=status.HTTP_200_OK)
     if request.method == 'POST':
         # Extract data from the request payload
         data = json.loads(request.body)
@@ -112,6 +108,22 @@ def manageUser(request):
 
     return Response({'error': 'Invalid request method'}, status=405)
 
+def login_user(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Log in the user, creating a session
+            login(request, user)
+            return JsonResponse({'message': 'Login successful'})
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
