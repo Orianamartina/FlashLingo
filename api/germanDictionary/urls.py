@@ -11,6 +11,7 @@ urlpatterns = [
     path('importdictionary/', views.importDictionary),
     path('wordsbylevel/<int:level>', views.getLevel),
     path('user/', views.manageUser)
+    path('login/', views.login_user)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
