@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
+from django.contrib.auth.forms import UserCreationForm
 import json
 
 # Create your views here. endpoints
@@ -79,7 +80,38 @@ def importDictionary(request):
                 if serializer.is_valid():
                     serializer.save()
             return Response(status=status.HTTP_201_CREATED)       
+@api_view(['GET', 'PUT','POST'])
+
+def manageUser(request):
+    
+    if request.method == "GET":
+        user = User.objects.get(email=serializer.email)
+        serializer = UserSerializer(user)
         
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == 'POST':
+        # Extract data from the request payload
+        data = json.loads(request.body)
+        
+        class CustomUserCreationForm(UserCreationForm):
+            class Meta(UserCreationForm.Meta):
+                fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
+
+        # Create an instance of the custom form with the received data
+        form = CustomUserCreationForm(data)
+
+        if form.is_valid():
+            # Save the user
+            user = form.save()
+
+            # Return a success response
+            return Response({'message': 'User created successfully'})
+        else:
+            # Return an error response with the form errors
+            return Response({'errors': form.errors}, status=400)
+
+    return Response({'error': 'Invalid request method'}, status=405)
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
