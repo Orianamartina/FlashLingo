@@ -2,7 +2,7 @@
 
 
 
-export default function LoginButton(){
+export default function RegisterButton(){
 
     const handleClick = () => {
 
@@ -12,7 +12,7 @@ export default function LoginButton(){
 
         <div>
             <button onClick={handleClick}>
-                LogIn
+                Register
             </button>
 
 

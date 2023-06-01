@@ -1,5 +1,5 @@
-import LoginButton from "./LoginButton"
-import LoginForm from "./LoginForm"
+import LoginButton from "../register/RegisterButton"
+import LoginForm from "../register/RegisterForm"
 import Link from "next/link"
 
 export default function Login(){
