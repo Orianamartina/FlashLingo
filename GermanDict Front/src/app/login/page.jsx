@@ -1,4 +1,4 @@
-import LoginButton from "./LoginButton"
+
 import LoginForm from "./LoginForm"
 import Link from "next/link"
 
@@ -9,7 +9,7 @@ export default function Login(){
         <div>
             <h1>Log In</h1>
             <LoginForm></LoginForm>
-            <LoginButton></LoginButton>
+
 
             <div>
 

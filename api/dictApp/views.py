@@ -10,6 +10,7 @@ from rest_framework import permissions
 from rest_framework import status
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from datetime import datetime, timedelta
 import json
 
 # Create your views here. endpoints
@@ -113,13 +114,21 @@ def login_user(request):
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
+        session_cookie = request.session.get('sessionid')
+        # Calculate the expiration date (next day)
+        expiration_date = datetime.now() + timedelta(days=1)
+
+        # Set the session expiration
+        request.session.set_expiry(SessionBase.get_expiry_date(expiration_date))
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             # Log in the user, creating a session
             login(request, user)
-            return JsonResponse({'message': 'Login successful'})
+            response = JsonResponse({'session_cookie': session_cookie})
+            response.set_cookie('session_cookie', session_cookie)  # Set the session cookie in the response headers
+            return response
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
 

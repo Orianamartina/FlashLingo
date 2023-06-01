@@ -2,16 +2,16 @@
 
 
 
-export default function LoginButton(){
+export default function LoginButton(props){
 
-    const handleClick = () => {
-
+    const handleClick = async (event) => {
+        event.preventDefault()
     }
 
     return (
 
         <div>
-            <button onClick={handleClick}>
+            <button onClick={handleClick} type={props.type} form={props.form}>
                 Login
             </button>
 

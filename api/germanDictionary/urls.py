@@ -10,7 +10,7 @@ urlpatterns = [
     path('allwords/<int:id>', views.germanWordsById),
     path('importdictionary/', views.importDictionary),
     path('wordsbylevel/<int:level>', views.getLevel),
-    path('user/', views.manageUser),
+    path('register/', views.manageUser),
     path('login/', views.login_user),
 ]
 
