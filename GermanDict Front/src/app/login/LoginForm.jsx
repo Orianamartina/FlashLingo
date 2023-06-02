@@ -1,8 +1,8 @@
 "use client";
 import axios from 'axios';
-import LoginButton from './LoginButton';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
-
+import style from "./loginPage.module.css"
 
 
 export default function LoginForm(){
@@ -22,27 +22,26 @@ export default function LoginForm(){
         event.preventDefault()
         
         //django cookie
-
+        const { csrftoken } = parseCookies();
 
         const username = form.username
         const password =  form.password
 
         try{
             
-            const response = await axios.post("http://127.0.0.1:8000/login/",
-            {
-                username,
-                password
-            },{
-                headers:{
-                    'X-CSRFToken': csrftoken 
+            await fetch('http://127.0.0.1:8000/login/', {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({ username, password }),
+                headers: {
+                  'Content-Type': 'application/json'
                 }
-            });
+              });
             
             if (response.status === 200) {
-                //login succesfull, store user data on storage
+                //login successful, store user data on storage
             }else{
-
+                
             }
         } catch (error){
 
@@ -51,19 +50,19 @@ export default function LoginForm(){
     }
 
     return(
-        <div>
+        <div className={style.formContainer} >
             <form onSubmit={handleSubmit} id="form">
                 
-                <label htmlFor="">Email</label>
-                <input onChange={handleInputChange} placeholder="Username" name='username'>
+                <label  className={style.formLabel} htmlFor="">Email</label>
+                <input className={style.formInput} onChange={handleInputChange} placeholder="Username" name='username'>
 
                 </input>
-                <label>Password</label>
-                <input onChange={handleInputChange} placeholder="Password" password='password'>
+                <label className={style.formLabel} >Password</label>
+                <input className={style.formInput} onChange={handleInputChange} placeholder="Password" password='password'>
 
                 </input>
             </form>
-            <button type='submit' form='form'>LogIn</button>
+            <button className={style.loginButton} type='submit' form='form'>LogIn</button>
         
 
         </div>

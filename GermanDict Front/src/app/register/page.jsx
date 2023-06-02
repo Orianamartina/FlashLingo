@@ -1,18 +1,19 @@
 import RegisterButton from "./RegisterButton"
 import RegisterForm from "./RegisterForm"
-
+import Link from "next/link"
+import style from "./registerPage.module.css"
 export default function Login(){
 
     
     return (
         <div>
-            <h1>Log In</h1>
+            <h1>Register</h1>
             <RegisterForm></RegisterForm>
-            <RegisterButton></RegisterButton>
+         
         
             <div>
 
-                <h3>Already registered?</h3>
+                <h3 className={style.text} >Already registered?</h3>
                 <Link href={"/login"}>
                     Login
                 </Link>

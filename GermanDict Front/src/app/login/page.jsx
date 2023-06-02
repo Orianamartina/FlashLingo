@@ -1,12 +1,12 @@
 
 import LoginForm from "./LoginForm"
 import Link from "next/link"
-
+import style from "./loginPage.module.css"
 export default function Login(){
 
     
     return (
-        <div>
+        <div className={style.container}>
             <h1>Log In</h1>
             <LoginForm></LoginForm>
 

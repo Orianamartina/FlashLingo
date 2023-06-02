@@ -11,6 +11,9 @@ from rest_framework import status
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from datetime import datetime, timedelta
+#cookie management
+from django.views.decorators.csrf import csrf_exempt
+from django.middleware.csrf import get_token
 import json
 
 # Create your views here. endpoints
@@ -127,12 +130,16 @@ def login_user(request):
             # Log in the user, creating a session
             login(request, user)
             response = JsonResponse({'session_cookie': session_cookie})
-            response.set_cookie('session_cookie', session_cookie)  # Set the session cookie in the response headers
+            response.set_cookie('csrftoken', get_token(request))  # Set the session cookie in the response headers
             return response
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
-
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+    else:
+        response = JsonResponse({'success': False, 'error': 'Invalid request method'})
+        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'  # Replace with your Next.js app's origin
+        response['Access-Control-Allow-Credentials'] = 'true'
+        return response
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')

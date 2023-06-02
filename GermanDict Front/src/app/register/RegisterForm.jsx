@@ -2,7 +2,13 @@
 import axios from 'axios';
 
 export default function RegisterForm(){
+    const handleSubmit = () => {
 
+    }
+    
+    const handleInputChange = () => {
+        
+    }
   
 
     return(
@@ -29,6 +35,8 @@ export default function RegisterForm(){
 
                 </input>
             </form>
+
+            <button>Register</button>
         </div>
     )
 }

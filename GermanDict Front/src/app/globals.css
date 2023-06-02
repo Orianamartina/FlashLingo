@@ -1,0 +1,11 @@
+:root{
+    --green: #27b46e;
+    --yellow: #EDC02c;
+    --orange: #f03613;   
+    --lightBlue: #A2eeeb;
+    --cream: #f3e2b3;
+}
+
+body{
+    background-color: #81cad6;
+}

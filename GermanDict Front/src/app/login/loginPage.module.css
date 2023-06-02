@@ -1,0 +1,35 @@
+.container{
+    margin: auto;
+    margin-top: 10%;
+    height: fit-content;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    
+}
+.formContainer{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.formInput{
+    display: block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    border: none;
+    height: 7vh;
+    width: 100%;
+}
+.formLabel{
+    display: block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+
+}
+.loginButton{
+    
+}
