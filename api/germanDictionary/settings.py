@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework.authtoken',
     "corsheaders",
     'rest_framework',
     'dictApp',
@@ -65,17 +66,6 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 CSRF_COOKIE_SAMESITE = 'None'
 
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

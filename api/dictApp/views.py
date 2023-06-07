@@ -114,31 +114,13 @@ def manageUser(request):
 
 def login_user(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        username = data.get('username')
-        password = data.get('password')
-        session_cookie = request.session.get('sessionid')
-        # Calculate the expiration date (next day)
-        expiration_date = datetime.now() + timedelta(days=1)
+        return "hola"
 
-        # Set the session expiration
-        request.session.set_expiry(SessionBase.get_expiry_date(expiration_date))
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            # Log in the user, creating a session
-            login(request, user)
-            response = JsonResponse({'session_cookie': session_cookie})
-            response.set_cookie('csrftoken', get_token(request))  # Set the session cookie in the response headers
-            return response
-        else:
-            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    
     
     else:
         response = JsonResponse({'success': False, 'error': 'Invalid request method'})
-        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'  # Replace with your Next.js app's origin
-        response['Access-Control-Allow-Credentials'] = 'true'
+
         return response
 
 class UserViewSet(viewsets.ModelViewSet):

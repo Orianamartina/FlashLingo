@@ -28,16 +28,10 @@ export default function LoginForm(){
         const password =  form.password
 
         try{
-            
-            await fetch('http://127.0.0.1:8000/login/', {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify({ username, password }),
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              });
-            
+          
+            await axios.post('http://127.0.0.1:8000/login/', username, password, {withCredentials: true})
+             
+          
             if (response.status === 200) {
                 //login successful, store user data on storage
             }else{
