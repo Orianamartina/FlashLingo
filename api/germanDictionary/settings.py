@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from dotenv import dotenv_values
 from pathlib import Path
+env_vars = dotenv_values()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,17 +22,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t3!s0h(-4y1+*gn-vp&wg=btoc3cjt^d7cs^#uquklu5i553@d'
+SECRET_KEY =  env_vars.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  env_vars.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
 # Application definition
 
 INSTALLED_APPS = [
+ 
     'rest_framework.authtoken',
     "corsheaders",
     'rest_framework',
@@ -54,10 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
-#CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
+
 
 
 ROOT_URLCONF = 'germanDictionary.urls'
@@ -68,9 +71,10 @@ CSRF_COOKIE_SAMESITE = 'None'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+
     'DEFAULT_PERMISSION_CLASSES':(
         'rest_framework.permissions.IsAuthenticated',
     )
@@ -101,11 +105,11 @@ WSGI_APPLICATION = 'germanDictionary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'german_dictionary_app',
-        'USER': 'postgres',
-        'PASSWORD': 'rosita123',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME':  env_vars.get('NAME'),
+        'USER':  env_vars.get('USER'),
+        'PASSWORD':  env_vars.get('PASSWORD'),
+        'HOST':  env_vars.get('HOST'),
+        'PORT':  env_vars.get('PORT')
         
     }
 }

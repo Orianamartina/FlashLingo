@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
+from rest_framework.generics import RetrieveAPIView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from datetime import datetime, timedelta
@@ -127,3 +128,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class UserApiView(RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    def get_objet(self):
+        return self.request.user
