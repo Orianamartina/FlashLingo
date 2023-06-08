@@ -12,7 +12,7 @@ urlpatterns = [
     path('importdictionary/', views.importDictionary),
     path('wordsbylevel/<int:level>', views.getLevel),
     path('register/', views.manageUser),
-    path('login/', views.login_user),
+    path('login/', views.getUser),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
 

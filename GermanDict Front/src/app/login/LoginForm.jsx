@@ -2,11 +2,15 @@
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
+import { userToken } from '@/redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 import style from "./loginPage.module.css"
 
 
 export default function LoginForm(){
 
+    const token =  useSelector((state) => state.userToken)
+    const dispatch = useDispatch()
     const [form, setForm] = useState({
         username : "",
         password : ""
@@ -18,27 +22,20 @@ export default function LoginForm(){
             [event.target.name] : event.target.value
         })
     }
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        
-        //django cookie
-        const { csrftoken } = parseCookies();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         const username = form.username
         const password =  form.password
 
         try{
-          
-            await axios.post('http://127.0.0.1:8000/login/', username, password, {withCredentials: true})
+           const token = dispatch(userToken({username: username, password: password}))
+            
+           console.log(token)
              
-          
-            if (response.status === 200) {
-                //login successful, store user data on storage
-            }else{
-                
-            }
-        } catch (error){
-
+             
+        }catch (error){
+            console.log(error.message)
         }
 
     }
@@ -52,7 +49,7 @@ export default function LoginForm(){
 
                 </input>
                 <label className={style.formLabel} >Password</label>
-                <input className={style.formInput} onChange={handleInputChange} placeholder="Password" password='password'>
+                <input className={style.formInput} onChange={handleInputChange} placeholder="Password" name='password'>
 
                 </input>
             </form>

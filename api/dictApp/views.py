@@ -112,7 +112,7 @@ def manageUser(request):
 
     return Response({'error': 'Invalid request method'}, status=405)
 
-def login_user(request):
+def getUser(request):
     if request.method == "POST":
         return "hola"
 
