@@ -132,5 +132,13 @@ class UserViewSet(viewsets.ModelViewSet):
 class UserApiView(RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
-    def get_objet(self):
-        return self.request.user
+    def get_object(self):
+        userInfo = [{
+           "id": self.request.user.id,
+            "is_superuser" : self.request.user.is_superuser,
+            "username": self.request.user.username,
+            "firstName": self.request.user.first_name,
+            "lastName": self.request.user.last_name
+
+        }]
+        return self.request.user.id

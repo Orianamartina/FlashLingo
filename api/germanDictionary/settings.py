@@ -29,6 +29,14 @@ DEBUG =  env_vars.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
@@ -36,9 +44,9 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 # Application definition
 
 INSTALLED_APPS = [
- 
-    'rest_framework.authtoken',
     "corsheaders",
+    'rest_framework.authtoken',
+    
     'rest_framework',
     'dictApp',
     'django.contrib.admin',

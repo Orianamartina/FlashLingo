@@ -33,17 +33,17 @@ export default function LoginForm(){
             let response = await axios.post(`${apiUrl}api/token/`, form, {
                 withCredentials: true
             });
-            localStorage.setItem("userToken", JSON.stringify(response.data));
+            
             const accessToken = response.data.access
             if (accessToken){
                 const userConfig = {
                     headers: {
                         'Authorization': 'Bearer ' + accessToken,
-                        withCredentials: true
+                        
                     }
                 }
                 const {data: userData} = await axios.get(`${apiUrl}user`, userConfig)
-                console.log(userData)
+                localStorage.setItem("userdata", JSON.stringify(userdata));
                 return (json({user: userData, access:accessToken}))
             }
             
