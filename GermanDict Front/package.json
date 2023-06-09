@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "cookie": "^0.5.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "localstorage": "^1.0.1",
