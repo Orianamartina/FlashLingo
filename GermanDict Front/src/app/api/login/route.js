@@ -22,15 +22,22 @@ export  async function POST(request){
         }
         if (accessToken){
             
-            const data = await axios.get(`${apiUrl}user`,{"username": username, "password": password}, 
+            const data = await axios.post(`${apiUrl}user/`, 
+            body,
             {headers: {
-                'HTTP_AUTHORIZATION': `Bearer ${accessToken}`,
+                'Authorization': `Bearer ${accessToken}`,
                 "Content-Type": "application/json"
             }})
-            return new Response(data.data, {
+            const filteredData = data.data;
+            delete filteredData.password;
+            delete filteredData.email;
+            const dataAndToken = {user: filteredData, accessToken}
+            const dataResponse = JSON.stringify(dataAndToken);
+            return new Response(dataResponse, {
                 status: 200,
                 headers:{
-                    'Set-Cookie': `token=${accessToken}`
+                    'Set-Cookie': `token=${accessToken}`,
+                    "Content-Type": "application/json"
                 }
             })
         }

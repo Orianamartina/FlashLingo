@@ -113,9 +113,9 @@ def manageUser(request):
             return Response({'errors': form.errors}, status=400)
 
     return Response({'error': 'Invalid request method'}, status=405)
-@api_view(['GET'])
+@api_view(['POST'])
 def getUser(request):
-    if request.method == "GET":
+    if request.method == "POST":
         authentication_classes = [JWTAuthentication]
         permission_classes = [permissions.IsAuthenticated]
         data = json.loads(request.body)
