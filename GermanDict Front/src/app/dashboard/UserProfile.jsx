@@ -2,16 +2,10 @@
 
 
 
+export default function UserProfile(props){
 
 
 
-export default function ContinueButton(){
-
-
-
-
-
-    
     return (
 
         <div>
