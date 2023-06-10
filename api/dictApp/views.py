@@ -113,22 +113,21 @@ def manageUser(request):
             return Response({'errors': form.errors}, status=400)
 
     return Response({'error': 'Invalid request method'}, status=405)
+
 @api_view(['POST'])
 def getUser(request):
     if request.method == "POST":
         authentication_classes = [JWTAuthentication]
         permission_classes = [permissions.IsAuthenticated]
         data = json.loads(request.body)
-    
         try:
-        
+    
             user = User.objects.get(username = data["username"])
             
         except User.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
         return Response(serializer.data)
-
     
     else:
         response = JsonResponse({'success': False, 'error': 'Invalid request method'})
@@ -140,9 +139,3 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class UserApiView(RetrieveAPIView):
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    def get_object(self):
-        
-        return self.request.user.id
