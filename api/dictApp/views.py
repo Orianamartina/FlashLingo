@@ -10,6 +10,7 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from django.contrib.auth.forms import UserCreationForm
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate, login
 from datetime import datetime, timedelta
 #cookie management
@@ -112,12 +113,22 @@ def manageUser(request):
             return Response({'errors': form.errors}, status=400)
 
     return Response({'error': 'Invalid request method'}, status=405)
-
+@api_view(['GET'])
 def getUser(request):
-    if request.method == "POST":
-        return "hola"
-
+    if request.method == "GET":
+        authentication_classes = [JWTAuthentication]
+        permission_classes = [permissions.IsAuthenticated]
+        data = json.loads(request.body)
     
+        try:
+        
+            user = User.objects.get(username = data["username"])
+            
+        except User.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
     
     else:
         response = JsonResponse({'success': False, 'error': 'Invalid request method'})
@@ -133,12 +144,5 @@ class UserApiView(RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
     def get_object(self):
-        userInfo = [{
-           "id": self.request.user.id,
-            "is_superuser" : self.request.user.is_superuser,
-            "username": self.request.user.username,
-            "firstName": self.request.user.first_name,
-            "lastName": self.request.user.last_name
-
-        }]
+        
         return self.request.user.id

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { userToken } from '@/redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import style from "./loginPage.module.css"
-const apiUrl = "http://127.0.0.1:8000/"
+
 
 
 export default function LoginForm(){
@@ -30,24 +30,9 @@ export default function LoginForm(){
         const password =  form.password
 
         try{
-            let response = await axios.post(`${apiUrl}api/token/`, form, {
-                withCredentials: true
-            });
-            
-            const accessToken = response.data.access
-            if (accessToken){
-                const userConfig = {
-                    headers: {
-                        'Authorization': 'Bearer ' + accessToken,
-                        
-                    }
-                }
-                const {data: userData} = await axios.get(`${apiUrl}user`, userConfig)
-                localStorage.setItem("userdata", JSON.stringify(userdata));
-                return (json({user: userData, access:accessToken}))
-            }
-            
-             
+           
+            const response = await axios.post('http://localhost:3000/api/login/', {username: username, password: password})
+            console.log(response)
         }catch (error){
             console.log(error.message)
         }
