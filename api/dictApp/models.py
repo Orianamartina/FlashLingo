@@ -15,13 +15,8 @@ class GermanWord(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class GameSession(models.Model):
+class UserStatistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    green_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_green')
-    yellow_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_yellow')
-    red_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_red')
     guess_ratio = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     days_streak = models.IntegerField(default=0)
     words_learned = models.IntegerField(default=0)
@@ -30,3 +25,18 @@ class GameSession(models.Model):
     incorrect_attempts = models.IntegerField(default=0)
     average_response_time = models.DurationField(null=True, blank=True)
     longest_streak = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user
+
+class GameSession(models.Model):
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    level = models.IntegerField()
+    green_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_green')
+    yellow_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_yellow')
+    red_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_red')
+    unclassified_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_unc')
+    def __str__(self):
+        return self.user
+   

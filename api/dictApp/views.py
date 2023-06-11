@@ -1,21 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .models import GermanWord
-from .serializers import GermanWordSerializer, UserSerializer
+from .models import GermanWord, GameSession
+from .serializers import GermanWordSerializer, UserSerializer, GameSessionSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.contrib.auth import authenticate, login
-from datetime import datetime, timedelta
+
 #cookie management
-from django.views.decorators.csrf import csrf_exempt
-from django.middleware.csrf import get_token
+
 import json
 
 # Create your views here. endpoints
@@ -139,3 +137,21 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+@api_view(['GET', 'PUT','POST'])
+def create_Game_Session(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('userId')
+        level = int(request.POST.get('level'))
+        
+        german_words = {}
+        
+        if level == 1:
+            german_words = GermanWord.objects.all()[:100]
+        if level == 2:
+            german_words = GermanWord.objects.all()[100:200]
+        if level == 3:
+            german_words = GermanWord.objects.all()[200:300]
+        #complete levels
+        user = get_object_or_404(User, id=user_id)
+
+        game_session = GameSe
