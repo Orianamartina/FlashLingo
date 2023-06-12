@@ -154,4 +154,18 @@ def create_Game_Session(request):
         #complete levels
         user = get_object_or_404(User, id=user_id)
 
-        game_session = GameSe
+        game_session = GameSession.objects.create(user =user, level= level)
+
+        game_session.unclassified_cards.set(german_words)
+        game_session.save()
+
+        response_data = {
+        'id': game_session.id,
+        'user': game_session.user.username,
+        'level': game_session.level,
+        'greenCards': game_session.green_cards,
+        'yellowCards': game_session.yellow_cards,
+        'redCards': game_session.red_cards,
+        'unclassified': game_session.unclassified_cards,
+        }
+        return JsonResponse(response_data)

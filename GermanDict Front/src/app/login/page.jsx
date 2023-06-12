@@ -4,11 +4,14 @@ import LoginForm from "./LoginForm"
 import Link from "next/link"
 import style from "./loginPage.module.css"
 import { redirect } from 'next/navigation';
+import { useEffect } from "react";
 export default function Login(){
-    const {username}= JSON.parse(localStorage.getItem("user")) ?? {}
+    let user =  JSON.parse(localStorage.getItem("user"))?? null
+    console.log(user)
+   
     return (
         <div>
-            {username? redirect('/dashboard'):(
+            {user? redirect('/dashboard'):(
                 <div className={style.container}>
                     <h1>Log In</h1>
                     <LoginForm></LoginForm>
