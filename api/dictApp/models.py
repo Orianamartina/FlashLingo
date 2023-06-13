@@ -32,7 +32,7 @@ class UserStatistics(models.Model):
 class GameSession(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    level = models.IntegerField()
+    level = models.IntegerField(default=1)
     green_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_green')
     yellow_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_yellow')
     red_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_red')

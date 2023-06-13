@@ -138,13 +138,14 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 @api_view(['GET', 'PUT','POST'])
-def create_Game_Session(request):
+def createGameSession(request):
     if request.method == 'POST':
-        user_id = request.POST.get('userId')
-        level = int(request.POST.get('level'))
+  
+        data = json.loads(request.body)
         
         german_words = {}
-        
+        level = data["level"]
+        user_id = data["userId"]
         if level == 1:
             german_words = GermanWord.objects.all()[:100]
         if level == 2:
