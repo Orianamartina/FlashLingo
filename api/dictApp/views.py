@@ -137,6 +137,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+def levelSetUp(level):
+    german_words = GermanWord.objects.all()[level*100 - 100: level*100]
+    level = GameSession.objects.create(level = level)
+    level.unclassified_cards.set(german_words)
+    level.save()
 @api_view(['GET', 'PUT','POST'])
 
 def setUpGameSessions(request):
@@ -146,12 +152,8 @@ def setUpGameSessions(request):
         if existingSessions:
             return Response("database already full", status=status.HTTP_400_BAD_REQUEST) 
         else:"""
-        level1 = GameSession.objects.create(
-            level = 1,
-        )
-        german_words = GermanWord.objects.all()[:100]
-        level1.unclassified_cards.set(german_words)
-
+        for i in range (1, 10):
+            levelSetUp(i)
 
         return Response("success creating game sessions", status= status.HTTP_201_CREATED)
 @api_view(['GET', 'PUT','POST'])
