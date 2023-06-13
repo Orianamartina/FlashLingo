@@ -44,17 +44,6 @@ def germanWordsById(request, id, format=None):
         serializer = GermanWordSerializer(foundWord)
         return Response(serializer.data)
 
-@api_view(['GET'])
-
-def getLevel(request, level, format = None):
-    if level == 1:
-        items = GermanWord.objects.all()[:100]
-    if level == 2:
-        items = GermanWord.objects.all()[100:200]
-    if level == 3:
-        items = GermanWord.objects.all()[200:300]
-    serializer = GermanWordSerializer(items, many=True)
-    return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
 def importDictionary(request):
@@ -147,41 +136,28 @@ def levelSetUp(level):
 
 def setUpGameSessions(request):
     if request.method == 'POST':
-        """existingSessions = GameSession.objects.get(pk=1)
+        existingSessions = GameSession.objects.get(pk=1)
 
         if existingSessions:
             return Response("database already full", status=status.HTTP_400_BAD_REQUEST) 
-        else:"""
-        for i in range (1, 10):
-            levelSetUp(i)
+        else:
+            for i in range (1, 10):
+                levelSetUp(i)
 
-        return Response("success creating game sessions", status= status.HTTP_201_CREATED)
+            return Response("success creating game sessions", status= status.HTTP_201_CREATED)
+        
+
 @api_view(['GET', 'PUT','POST'])
 def createGameSession(request):
     if request.method == 'POST':
   
         data = json.loads(request.body)
-        
-        german_words = {}
         level = data["level"]
         user_id = data["userId"]
-        if level == "1":
-           german_words = GermanWord.objects.all()[:100]
-        if level == "2":
-           german_words = GermanWord.objects.all()[100:200]
-        if level == "3":
-            german_words = GermanWord.objects.all()[200:300]
-        #complete levels
-        user = get_object_or_404(User, id=user_id)
-        #wordSerializer = GermanWordSerializer(german_words)
-        print(german_words)
-        game_session =  GameSession.objects.create(user =user, level= level)
-        
-        for word in german_words:
-            game_session.unclassified_cards.set(GermanWordSerializer(word))
-        
-        game_session.save()
 
+        user = get_object_or_404(User, id=user_id)
+        session = GameSession.objects.get(level = level)
+    
         response_data = {
         'id': game_session.id,
         'user': game_session.user.username,
