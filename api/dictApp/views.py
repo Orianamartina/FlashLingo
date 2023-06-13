@@ -138,6 +138,23 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 @api_view(['GET', 'PUT','POST'])
+
+def setUpGameSessions(request):
+    if request.method == 'POST':
+        """existingSessions = GameSession.objects.get(pk=1)
+
+        if existingSessions:
+            return Response("database already full", status=status.HTTP_400_BAD_REQUEST) 
+        else:"""
+        level1 = GameSession.objects.create(
+            level = 1,
+        )
+        german_words = GermanWord.objects.all()[:100]
+        level1.unclassified_cards.set(german_words)
+
+
+        return Response("success creating game sessions", status= status.HTTP_201_CREATED)
+@api_view(['GET', 'PUT','POST'])
 def createGameSession(request):
     if request.method == 'POST':
   
@@ -146,18 +163,21 @@ def createGameSession(request):
         german_words = {}
         level = data["level"]
         user_id = data["userId"]
-        if level == 1:
-            german_words = GermanWord.objects.all()[:100]
-        if level == 2:
-            german_words = GermanWord.objects.all()[100:200]
-        if level == 3:
+        if level == "1":
+           german_words = GermanWord.objects.all()[:100]
+        if level == "2":
+           german_words = GermanWord.objects.all()[100:200]
+        if level == "3":
             german_words = GermanWord.objects.all()[200:300]
         #complete levels
         user = get_object_or_404(User, id=user_id)
-
-        game_session = GameSession.objects.create(user =user, level= level)
-
-        game_session.unclassified_cards.set(german_words)
+        #wordSerializer = GermanWordSerializer(german_words)
+        print(german_words)
+        game_session =  GameSession.objects.create(user =user, level= level)
+        
+        for word in german_words:
+            game_session.unclassified_cards.set(GermanWordSerializer(word))
+        
         game_session.save()
 
         response_data = {
@@ -169,4 +189,4 @@ def createGameSession(request):
         'redCards': game_session.red_cards,
         'unclassified': game_session.unclassified_cards,
         }
-        return JsonResponse(response_data)
+        return JsonResponse({"hi": "hi"})

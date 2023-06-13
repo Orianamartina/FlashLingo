@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 class GermanWord(models.Model): 
-    id = models.CharField(max_length=5, primary_key=True)
+    id = models.IntegerField(primary_key=True)
     word = models.CharField(max_length=200)
     article = models.CharField(max_length=200)
     types = models.CharField(max_length=200)
@@ -14,7 +14,7 @@ class GermanWord(models.Model):
     sentence3 = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.name
+        return self.word
 class UserStatistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     guess_ratio = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
@@ -30,8 +30,6 @@ class UserStatistics(models.Model):
         return self.user
 
 class GameSession(models.Model):
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
     green_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_green')
     yellow_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_yellow')
@@ -40,3 +38,9 @@ class GameSession(models.Model):
     def __str__(self):
         return self.user
    
+class User_GameSessions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    gamesession = models.ForeignKey(GameSession, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
