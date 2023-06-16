@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GameSessionSerializer(serializers.ModelSerializer):
     class Meta:
-        model: GameSession
+        model= GameSession
         fields = '__all__'
 
 class UserStatisticSerializer(serializers.ModelSerializer):

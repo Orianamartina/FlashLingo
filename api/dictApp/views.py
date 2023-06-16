@@ -1,9 +1,10 @@
-from django.shortcuts import render
+
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import GermanWord, GameSession
 from .serializers import GermanWordSerializer, UserSerializer, GameSessionSerializer
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -11,14 +12,27 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from django.utils.decorators import method_decorator
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_protect
 #cookie management
-
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 import json
 
 # Create your views here. endpoints
 @api_view(['GET', 'POST'])
 
+
+
+@ensure_csrf_cookie
+def getCSRFToken(request):
+    if request.method == 'GET':
+      
+        # The CSRF token is accessible via the request object
+        csrf_token = request.COOKIES.get('csrftoken')
+        return JsonResponse({'csrf_token': csrf_token})
+    
+@method_decorator(csrf_protect, name="dispatch")
 def germanWords(request):
     #get all words
     #serialize them
@@ -33,8 +47,7 @@ def germanWords(request):
         if serializer.is_valid():
             serializer.save( )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-@api_view(['GET', 'POST'])
+
 def germanWordsById(request, id, format=None):
     if request.method == 'GET':
         try:
@@ -45,7 +58,6 @@ def germanWordsById(request, id, format=None):
         return Response(serializer.data)
 
 
-@api_view(['GET', 'POST'])
 def importDictionary(request):
     if request.method == 'POST':
         germanDict = GermanWord.objects.all()
@@ -74,7 +86,7 @@ def importDictionary(request):
                 if serializer.is_valid():
                     serializer.save()
             return Response(status=status.HTTP_201_CREATED)       
-@api_view(['GET', 'PUT','POST'])
+
 
 def manageUser(request):
     
@@ -94,14 +106,13 @@ def manageUser(request):
             user = form.save()
 
             # Return a success response
-            return Response({'message': 'User created successfully'})
+            return Response({'message': 'User created successfully'}, status=201)
         else:
             # Return an error response with the form errors
             return Response({'errors': form.errors}, status=400)
 
     return Response({'error': 'Invalid request method'}, status=405)
 
-@api_view(['POST'])
 def getUser(request):
     if request.method == "POST":
         authentication_classes = [JWTAuthentication]
@@ -114,7 +125,7 @@ def getUser(request):
         except User.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
     
     else:
         response = JsonResponse({'success': False, 'error': 'Invalid request method'})
@@ -127,44 +138,35 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-def levelSetUp(level):
-    german_words = GermanWord.objects.all()[level*100 - 100: level*100]
-    level = GameSession.objects.create(level = level)
-    level.unclassified_cards.set(german_words)
-    level.save()
+
 @api_view(['GET', 'PUT','POST'])
 
 def setUpGameSessions(request):
     if request.method == 'POST':
-        existingSessions = GameSession.objects.get(pk=1)
-
-        if existingSessions:
-            return Response("database already full", status=status.HTTP_400_BAD_REQUEST) 
+        data = json.loads(request.body)
+        level = int(data["level"])
+        user_id = data["user_id"]
+        if GameSession.objects.filter(user=user_id, level=level).exists():
+            return Response({"message": "User already owns a game session with this level, if you want to restart the existing session you need to delete the current one first."}, status=400)
         else:
-            for i in range (1, 10):
-                levelSetUp(i)
+            german_words = GermanWord.objects.all()[level*100 - 100: level*100]
+            sessionCreated = GameSession.objects.create(level = level, user_id=user_id)
+            sessionCreated.unclassified_cards.set(german_words)
+            sessionCreated.save()
 
-            return Response("success creating game sessions", status= status.HTTP_201_CREATED)
+            return Response({"message": "Game session created"}, status=201)
         
 
-@api_view(['GET', 'PUT','POST'])
-def createGameSession(request):
+def getGameSession(request):
     if request.method == 'POST':
-  
+        authentication_classes = [JWTAuthentication]
+        permission_classes = [permissions.IsAuthenticated]
         data = json.loads(request.body)
-        level = data["level"]
-        user_id = data["userId"]
-
-        user = get_object_or_404(User, id=user_id)
-        session = GameSession.objects.get(level = level)
-    
-        response_data = {
-        'id': game_session.id,
-        'user': game_session.user.username,
-        'level': game_session.level,
-        'greenCards': game_session.green_cards,
-        'yellowCards': game_session.yellow_cards,
-        'redCards': game_session.red_cards,
-        'unclassified': game_session.unclassified_cards,
-        }
-        return JsonResponse({"hi": "hi"})
+        level = int(data["level"])
+        user_id = data["user_id"]
+        try:
+            gameSession = GameSession.objects.get(user_id = user_id, level = level)
+         
+            return JsonResponse(GameSessionSerializer(gameSession).data)
+        except GameSession.DoesNotExist:
+                return Response({"message": "Game session not found with the given user and level not found, create a new one"}, status=404)

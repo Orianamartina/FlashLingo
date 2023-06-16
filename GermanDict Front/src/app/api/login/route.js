@@ -1,8 +1,9 @@
 'use server';
+import Cookies from 'js-cookie';
 import axios from "axios"
 import cookie from 'cookie'
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 const apiUrl = "http://127.0.0.1:8000/"
 export  async function POST(request){
         let accessToken =  null
@@ -21,12 +22,18 @@ export  async function POST(request){
             
         }
         if (accessToken){
-            
+            const csrfToken = await axios.get(`${apiUrl}csrf_token`,
+            {headers:{
+                'Authorization': `Bearer ${accessToken}`,
+            }})
+            console.log(csrfToken.data)
+            Cookies.set("csrftoken","wGxHruDbmePSNsfDPZKQw8lF5r54TSga")
             const data = await axios.post(`${apiUrl}user/`, 
             body,
             {headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
+                "X-CSRFToken": "wGxHruDbmePSNsfDPZKQw8lF5r54TSga",
+                "Content-Type": "application/json",
+                
             }})
             const filteredData = data.data;
             delete filteredData.password;

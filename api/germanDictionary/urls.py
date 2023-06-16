@@ -14,8 +14,9 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('user/', views.getUser),
-    path('gamesession/', views.createGameSession),
-    path('setupgamesessions/', views.setUpGameSessions)
+    path('setgamesession/', views.setUpGameSessions),
+    path('getgamesession/', views.getGameSession),
+    path('csrf_token/', views.getCSRFToken),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
