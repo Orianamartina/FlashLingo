@@ -2,14 +2,18 @@
 import UserProfile from "./UserProfile"
 import UserStatistics from "./UserStatistics"
 import ContinueButton from "./ContinueButton"
-import { redirect } from 'next/navigation';
+import SelectLevel from "./selectLevel";
 import { useRouter } from 'next/navigation';
-
 
    
 export default function Dashboard(){
 
-    const user = JSON.parse(localStorage.getItem("user")) ?? null
+    let user = null;
+    try {
+      user = JSON.parse(localStorage.getItem("user"));
+    } catch (error) {
+      user = null
+    }
 
     const {push} = useRouter()
 
@@ -23,6 +27,7 @@ export default function Dashboard(){
                     <UserProfile></UserProfile>
                     <UserStatistics></UserStatistics>   
                     <ContinueButton></ContinueButton>
+                    <SelectLevel></SelectLevel>
                 </>
             )
             

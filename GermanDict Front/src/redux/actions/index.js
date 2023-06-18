@@ -1,4 +1,4 @@
-import { USERTOKEN} from "../action-types";
+import { USERTOKEN, GETLEVEL} from "../action-types";
 
 import axios from "axios";
 const apiUrl = "http://127.0.0.1:8000/"
@@ -11,4 +11,11 @@ export const userToken= (loginCredentials) => {
     }
 }
 
+export const getLevel = () => {
+    return async function(dispatch){
+        const response = await axios.get(`${apiUrl}getgamesession/`)
+        return dispatch({type: GETLEVEL, payload: response.data})
+    }
+
+}
 

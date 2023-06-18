@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import LoginForm from "./LoginForm"
 import Link from "next/link"
@@ -6,9 +6,12 @@ import style from "./loginPage.module.css"
 import { redirect } from 'next/navigation';
 import { useEffect } from "react";
 export default function Login(){
-    let user =  JSON.parse(localStorage.getItem("user"))?? null
-    console.log(user)
-   
+    let user = null;
+    try {
+      user = JSON.parse(localStorage.getItem("user"));
+    } catch (error) {
+      user = null
+    }
     return (
         <div>
             {user? redirect('/dashboard'):(

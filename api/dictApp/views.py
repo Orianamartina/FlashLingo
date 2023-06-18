@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import GermanWord, GameSession
 from .serializers import GermanWordSerializer, UserSerializer, GameSessionSerializer
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth.decorators import login_required
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -14,6 +15,7 @@ from django.contrib.auth.forms import UserCreationForm
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
+from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_protect
 #cookie management
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
@@ -23,14 +25,18 @@ import json
 @api_view(['GET', 'POST'])
 
 
-
-@ensure_csrf_cookie
+@login_required
 def getCSRFToken(request):
     if request.method == 'GET':
-      
-        # The CSRF token is accessible via the request object
-        csrf_token = request.COOKIES.get('csrftoken')
-        return JsonResponse({'csrf_token': csrf_token})
+        if request.user.is_authenticated:
+            # Get the CSRF token
+            csrf_token = get_token(request)
+            # Set the CSRF token in the response cookies
+            response = JsonResponse({'csrf_token': csrf_token})
+            response.set_cookie('csrftoken', csrf_token)
+            return response
+        else:
+            return JsonResponse({'detail': 'Authentication credentials were not provided.'}, status=401)
     
 @method_decorator(csrf_protect, name="dispatch")
 def germanWords(request):

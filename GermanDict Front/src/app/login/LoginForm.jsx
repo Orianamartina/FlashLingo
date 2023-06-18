@@ -35,10 +35,10 @@ export default function LoginForm(){
             if (response ){
                 localStorage.setItem("accesstoken", response.data.accessToken)
                 localStorage.setItem("user", JSON.stringify(response.data.user))
-                
+                router.push("/dashboard")
             }
-        
-            router.push("/dashboard")
+            
+            
         }catch (error){
             console.log(error.message)
         }
