@@ -16,7 +16,7 @@ export default function ContinueButton(){
 
         <div>
 
-
+            <button>continue</button>
 
             
         </div>

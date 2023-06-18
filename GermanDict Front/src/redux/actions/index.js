@@ -11,9 +11,23 @@ export const userToken= (loginCredentials) => {
     }
 }
 
-export const getLevel = () => {
+export const getLevel = (level, userId) => {
     return async function(dispatch){
-        const response = await axios.get(`${apiUrl}getgamesession/`)
+        try {
+            const response = await axios.post(`${apiUrl}getgamesession/`,{
+                "level": level,
+                "user_id": userId
+                },
+                {headers:{
+
+                }}
+            ) 
+
+        } catch (error) {
+            
+        }
+
+       
         return dispatch({type: GETLEVEL, payload: response.data})
     }
 

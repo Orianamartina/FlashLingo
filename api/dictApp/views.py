@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
-from django.shortcuts import get_object_or_404
+from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.utils.decorators import method_decorator
@@ -172,7 +172,11 @@ def getGameSession(request):
         user_id = data["user_id"]
         try:
             gameSession = GameSession.objects.get(user_id = user_id, level = level)
-         
-            return JsonResponse(GameSessionSerializer(gameSession).data)
+            unc_cards = serializers.serialize("json", gameSession.unclassified_cards.all())
+            red_cards = serializers.serialize("json", gameSession.red_cards.all())
+            yellow_cards = serializers.serialize("json", gameSession.yellow_cards.all())
+            green_cards = serializers.serialize("json", gameSession.green_cards.all())
+
+            return JsonResponse({"unclassified": unc_cards, "red": red_cards, "yellow": yellow_cards, "green": green_cards}, safe=False)
         except GameSession.DoesNotExist:
                 return Response({"message": "Game session not found with the given user and level not found, create a new one"}, status=404)
