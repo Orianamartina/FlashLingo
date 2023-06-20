@@ -1,20 +1,25 @@
 "use client"
 
 import {useSelector} from "react-redux";
-import { useState } from "react";
-export default function Cards(){
+import { useEffect, useState } from "react";
+export default function Cards(props){
 
-    const gameSession = useSelector((state) => state.gameSession)
+    const [answer, setAnswer] = useState()
+   
+    function handleInputChange(e){
+        setAnswer(e.target.value)
+    }
     
-    const [currentSession, setCurrentSession] = useState()
-
-    console.log(gameSession)
+    
     return (
 
         <div>
 
-            <h1>holaaa</h1>
-
+            <h1>{props.cardQueue[0].word}</h1>
+            <input type="text" onChange={(e) => handleInputChange(e)}/>
+            <button onClick={() =>{props.handleClick(answer); setAnswer(" ")}}>Check</button>
+            <h1>{answer}</h1>
+            <h1>{props.hola}</h1>
             
         </div>
     )

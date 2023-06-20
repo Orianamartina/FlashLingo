@@ -181,3 +181,45 @@ def getGameSession(request):
             return JsonResponse(serializer.data)
         except GameSession.DoesNotExist:
                 return JsonResponse({"message": "Game session not found with the given user and level not found, create a new one"}, status=404)
+    
+
+
+def update_game_session(request, session_id):
+    if request.method == 'POST':
+        try:
+            game_session = GameSession.objects.get(id=session_id)
+            
+            words_data = request.POST.dict()  # Assuming data is passed as form data
+            
+            # Clear all card fields
+            game_session.red_cards.clear()
+            game_session.yellow_cards.clear()
+            game_session.green_cards.clear()
+            game_session.unclassified_card.clear()
+
+            for classification, words in words_data.items():
+                if classification not in ['red_cards', 'yellow_cards', 'green_cards', 'unclassified_cards']:
+                    return JsonResponse({'error': 'Invalid classification'}, status=400)
+                
+                words_list = words.split(',')
+                
+                for word_id in words_list:
+                    german_word = GermanWord.objects.get(id=word_id)
+                    
+                    if classification == 'green_cards':
+                        game_session.green_cards.add(german_word)
+                    elif classification == 'yellow_cards':
+                        game_session.yellow_cards.add(german_word)
+                    elif classification == 'red_cards':
+                        game_session.red_cards.add(german_word)
+                    elif classification == 'unclassified_cards':
+                        game_session.unclassified_cards.add(german_word)
+                  
+            
+            game_session.save()
+            
+            return JsonResponse({'success': 'Game session updated'}, status=200)
+        except GameSession.DoesNotExist:
+            return JsonResponse({'error': 'Game session not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
