@@ -1,23 +1,30 @@
-
+"use client"
 
 import { useRouter } from 'next/navigation';
-
-
+import { getLevel } from "@/redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 
 
 export default function LevelCard(props){
 
     const {push} = useRouter()
     
+    const dispatch = useDispatch()
+    const refreshToken = Cookies.get('refreshToken');
+    const token = Cookies.get('accessToken')
+    console.log(refreshToken)
+    console.log(token)
     const handleLevelClick = (level)  => {
-        push(`/level${level}`)
+        dispatch(getLevel(level, props.userId, refreshToken))
+        push(`/play`)
     }
     
     return (
 
         <div>
             <button onClick={() => handleLevelClick(props.number)}>{props.number}</button>
-
 
             
         </div>

@@ -17,7 +17,6 @@ export default function Dashboard(){
 
     const {push} = useRouter()
 
-
     
     return (
 
@@ -26,8 +25,7 @@ export default function Dashboard(){
                 <>
                     <UserProfile></UserProfile>
                     <UserStatistics></UserStatistics>   
-                    <ContinueButton></ContinueButton>
-                    <SelectLevel></SelectLevel>
+                    <SelectLevel userId={user.id}></SelectLevel>
                 </>
             )
             

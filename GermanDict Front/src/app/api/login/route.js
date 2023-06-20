@@ -4,14 +4,16 @@ import axios from "axios"
 
 const apiUrl = "http://127.0.0.1:8000/"
 export  async function POST(request){
-       let accessToken =  null
-
+        let accessToken =  null
+        let refreshToken = null
         const {username, password} = await request.json()
 
         const body = {"username": username, "password": password}
         try {
             let response = await axios.post(`${apiUrl}api/token/`, body);
+            refreshToken = response.data.refresh
             accessToken = response.data.access
+            console.log(response.data)
         
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -22,9 +24,12 @@ export  async function POST(request){
         
         }
         if (accessToken){
+            Cookies.set("refreshToken", refreshToken, { httpOnly: true, secure: true })
+            Cookies.set('accessToken', accessToken, { httpOnly: true, secure: true });
+
             const csrfToken = await axios.get(`${apiUrl}csrf_token/`,
                  {headers:{
-                     'Authorization': `Bearer ${accessToken}`,
+                    'Authorization': `Bearer ${accessToken}`,
                   }})
     
             const token = csrfToken.data.csrf_token

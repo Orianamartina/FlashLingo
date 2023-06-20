@@ -79,6 +79,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 CSRF_COOKIE_SAMESITE = 'None'
 
+SESSION_COOKIE_HTTPONLY = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

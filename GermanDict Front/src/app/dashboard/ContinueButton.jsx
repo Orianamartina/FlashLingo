@@ -1,13 +1,24 @@
+"use client";
 
-
-
-
-
+import { getLevel } from "@/redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import { useEffect, useState } from "react";
 
 
 export default function ContinueButton(){
 
+    const dispatch = useDispatch()
+    const gameSession = useSelector((state) => state.gameSession)
 
+    useEffect(() => { 
+        dispatch(getLevel(2, 1))
+         
+    }, [dispatch])
+
+    const handleClick = async () => {
+
+       console.log(gameSession)
+    }
 
 
 
@@ -16,7 +27,7 @@ export default function ContinueButton(){
 
         <div>
 
-            <button>continue</button>
+            <button onClick={handleClick}>continue</button>
 
             
         </div>

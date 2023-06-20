@@ -1,4 +1,4 @@
-
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import GermanWord, GameSession
@@ -13,6 +13,7 @@ from rest_framework import status
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import authentication_classes, permission_classes
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
 from django.middleware.csrf import get_token
@@ -160,23 +161,23 @@ def setUpGameSessions(request):
             sessionCreated.unclassified_cards.set(german_words)
             sessionCreated.save()
 
-            return Response({"message": "Game session created"}, status=201)
+            serializer = GameSessionSerializer(sessionCreated)
+
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         
 
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def getGameSession(request):
-    if request.method == 'POST':
-        authentication_classes = [JWTAuthentication]
-        permission_classes = [permissions.IsAuthenticated]
-        data = json.loads(request.body)
-        level = int(data["level"])
-        user_id = data["user_id"]
+    if request.method == 'GET':
+      
+        #data = json.loads(request.body)
+        level = request.GET.get('level')
+        user_id = request.GET.get('user')
         try:
             gameSession = GameSession.objects.get(user_id = user_id, level = level)
-            unc_cards = serializers.serialize("json", gameSession.unclassified_cards.all())
-            red_cards = serializers.serialize("json", gameSession.red_cards.all())
-            yellow_cards = serializers.serialize("json", gameSession.yellow_cards.all())
-            green_cards = serializers.serialize("json", gameSession.green_cards.all())
+            serializer = GameSessionSerializer(gameSession)
 
-            return JsonResponse({"unclassified": unc_cards, "red": red_cards, "yellow": yellow_cards, "green": green_cards}, safe=False)
+            return JsonResponse(serializer.data)
         except GameSession.DoesNotExist:
-                return Response({"message": "Game session not found with the given user and level not found, create a new one"}, status=404)
+                return JsonResponse({"message": "Game session not found with the given user and level not found, create a new one"}, status=404)

@@ -4,7 +4,7 @@ import LevelCard from "./levelCard";
 
 
 
-export default function SelectLevel(){
+export default function SelectLevel(props){
 
     const items = [];
 
@@ -16,7 +16,7 @@ export default function SelectLevel(){
 
         <div>
             {items.map(level => {
-                return <LevelCard number={level}></LevelCard>
+                return <LevelCard number={level} userId={props.userId}></LevelCard>
             })}
 
 

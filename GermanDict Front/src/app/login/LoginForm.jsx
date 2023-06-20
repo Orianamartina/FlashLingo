@@ -33,7 +33,6 @@ export default function LoginForm(){
            
             const response = await axios.post('http://localhost:3000/api/login/', {username: username, password: password})
             if (response ){
-                localStorage.setItem("accesstoken", response.data.accessToken)
                 localStorage.setItem("user", JSON.stringify(response.data.user))
                 router.push("/dashboard")
             }

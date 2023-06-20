@@ -11,12 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-class GameSessionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= GameSession
-        fields = '__all__'
-
 class UserStatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model: UserStatistics
         fields = '__all__'
+
+class GameSessionSerializer(serializers.ModelSerializer):
+    green_cards = GermanWordSerializer(many=True)
+    yellow_cards = GermanWordSerializer(many=True)
+    red_cards = GermanWordSerializer(many=True)
+    unclassified_cards = GermanWordSerializer(many=True)
+
+    class Meta:
+        model = GameSession
+        fields = ('green_cards', 'yellow_cards', 'red_cards', 'unclassified_cards')
