@@ -38,21 +38,37 @@ export default function Play(){
     const totalCards = [...startingRedCards, ...startingRedCards, ...startingRedCards, ...startingYellowCards, ...startingYellowCards, ...startingGreenCards, ...startingUnclassifiedCards]
 
     const cardQueue = shuffleArray(totalCards)
+
     
     const [hola, setHola] = useState()
     const [flag, setFlag] = useState()
+    const [guessTime, setGuessTime] = useState()
 
+
+    /*  
+
+    
+    
+    
+    
+    */
     function handleClick(answer){
         if( answer == cardQueue[0].translation1 ||  answer == cardQueue[0].translation2 ||  answer == cardQueue[0].translation3){
             if (cardQueue[0] in greenCards){
                 setCurrentSession(prevState => ({
                     ...prevState,
-                    [green_cards]: [...prevState[green_cards], { cardQueue[0]}]
+                    [green_cards]: [...prevState[green_cards], cardQueue[0]]
                 }));
             };
             if (cardQueue[0] in redCards){
+                if (cardQueue[0] in currentSession.red_cards){
+                        
+                } 
+                else{
 
+                }                   
             }
+            
         }
         
         else{
