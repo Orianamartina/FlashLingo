@@ -28,7 +28,7 @@ class UserStatistics(models.Model):
     longest_streak = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.user
+        return self.username
 
 class GameSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
@@ -39,3 +39,5 @@ class GameSession(models.Model):
     unclassified_cards = models.ManyToManyField('GermanWord', related_name='game_sessions_unc')
   
    
+    def __str__(self):
+        return self.user.username
