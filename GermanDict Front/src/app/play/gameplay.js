@@ -368,12 +368,12 @@ const cardQueue = shuffleArray(gameCardsFormatted(gameCards))
 
 function checkCard(card, userInput, time){
     let points = card.points
-    let germanWord = card.German
     let trans1 = card.Translation1
     let trans2 = card.Translation2
     let trans3 = card.Translation3
-    let fast = time < 4
-    if (userInput == trans1 || userInput == trans2 || userInput == trans3 && fast){
+    let fast = time <= 4
+    let slow = time > 4
+    if ((userInput == trans1 || userInput == trans2 || userInput == trans3) && fast){
         if (points === 0){
             points = 6
         }
@@ -382,11 +382,9 @@ function checkCard(card, userInput, time){
         }
        
     }
-    if (userInput == trans1 || userInput == trans2 || userInput == trans3 && !fast){
+    if ((userInput == trans1 || userInput == trans2 || userInput == trans3) && slow){
         if (points === 0){
             points = 4
-        }else{
-            points = points
         }
         
     }
@@ -398,9 +396,14 @@ function checkCard(card, userInput, time){
         }
         
     }
-    return points
+    card.points = points
+    return {
+        word: card.german,
+        id: card.id,
+        points: card.points
+    }
 }
 
-
-
-console.log(cardQueue)
+module.exports = {
+    cardQueue, checkCard
+}
