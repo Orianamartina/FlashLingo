@@ -1,5 +1,5 @@
-import { USERTOKEN, GETLEVEL} from "../action-types";
-
+import { USERTOKEN, GETLEVEL, FORMATLEVEL} from "../action-types";
+import { cardQueue } from "@/app/play/gameplay";
 import axios from "axios";
 const apiUrl = "http://127.0.0.1:8000/"
 
@@ -15,7 +15,8 @@ export const getLevel = (level, userId) => {
     return async function(dispatch){
         try {
             const response =await axios.get(`${apiUrl}getgamesession/?level=${level}&user=${userId}`)
-            return dispatch({type: GETLEVEL, payload: response.data})
+            const data = cardQueue(response.data)
+            return dispatch({type: GETLEVEL, payload: data})
         } catch (error) {
             if (error.response && error.response.status === 404){
                 
@@ -23,7 +24,8 @@ export const getLevel = (level, userId) => {
                     "level": level,
                     "user_id": userId
                 },{ withCredentials: true })
-                return dispatch({type: GETLEVEL, payload: newSession.data})
+                let data = cardQueue(newSession.data)
+                return dispatch({type: GETLEVEL, payload: data})
             }
 
         }
@@ -32,4 +34,9 @@ export const getLevel = (level, userId) => {
     }
 
 }
-
+export const formatLevel = (cards) => {
+    return function(dispatch){
+        let data = cardQueue(cards)
+        return dispatch({type: FORMATLEVEL, payload: data })
+    }
+}

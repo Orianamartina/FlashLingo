@@ -373,9 +373,9 @@ export function cardQueue(cards){
 
 export function checkCard(card, userInput, time){
     let points = card.points
-    let trans1 = card.Translation1
-    let trans2 = card.Translation2
-    let trans3 = card.Translation3
+    let trans1 = card.translation1
+    let trans2 = card.translation2
+    let trans3 = card.translation3
     let fast = time <= 4
     let slow = time > 4
     if ((userInput == trans1 || userInput == trans2 || userInput == trans3) && fast){
@@ -383,7 +383,7 @@ export function checkCard(card, userInput, time){
             points = 6
         }
         else{
-            points = points++
+            points = 1
         }
        
     }
@@ -397,15 +397,10 @@ export function checkCard(card, userInput, time){
         if  (points === 0){
             points = 1
         }else{
-          points = points--  
+          points = -1 
         }
         
     }
-    card.points = points
-    return {
-        word: card.german,
-        id: card.id,
-        points: card.points
-    }
+    return points
 }
 
