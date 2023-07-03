@@ -323,50 +323,55 @@ function shuffleArray(array) {
     return array;
 }
 //function to add points to each card
-function formatCards(color, cards){
-    if (color == "red"){
-        cards.forEach(element => {
-                element.points = 0
+export function formatCards(color, cards){
+    if(cards){
 
-            });
-        return cards
-    }
-    if (color == "yellow"){
-        cards.forEach(element => {
-            element.points = 4
-        
-        })
-        return cards
-    }
-    if (color == "green"){
-        cards.forEach(element => {
-            element.points = 6
-        }) 
-        return cards
-    }
-    if (color == "white"){
-        cards.forEach(element => {
-            element.points = 0
-        })
-        return cards
+        if (color == "red"){
+            
+            cards.forEach(element => {
+                    element.points = 0
+
+                });
+            return cards
+        }
+        if (color == "yellow"){
+            cards.forEach(element => {
+                element.points = 4
+            
+            })
+            return cards
+        }
+        if (color == "green"){
+            cards.forEach(element => {
+                element.points = 6
+            }) 
+            return cards
+        }
+        if (color == "white"){
+            cards.forEach(element => {
+                element.points = 0
+            })
+            return cards
+        }
     }
 }
 // Set card arrays to play
-function gameCardsFormatted(cards){
-    const redCards = formatCards("red", cards.redCards)
-    const yellowCards = formatCards("yellow", cards.yellowCards)
-    const greenCards = formatCards("green", cards.greenCards)
-    const unclassifiedCards = formatCards("white", cards.unclassifiedCards)
+export function gameCardsFormatted(cards){
+    const redCards = formatCards("red", cards.red_cards)
+    const yellowCards = formatCards("yellow", cards.yellow_cards)
+    const greenCards = formatCards("green", cards.green_cards)
+    const unclassifiedCards = formatCards("white", cards.unclassified_cards)
     let array = unclassifiedCards.concat(redCards, redCards, redCards, yellowCards, yellowCards, greenCards)
     return (array)
 }
 
-// Set card Queue to shuffle randomly the cards array, ready to play.
-const cardQueue = shuffleArray(gameCardsFormatted(gameCards))
-
+export function cardQueue(cards){
+    const queue = shuffleArray(gameCardsFormatted(cards))
+    return queue
+}
 // Check answer and decide how to proceed with the word's score
 
-function checkCard(card, userInput, time){
+export function checkCard(card, userInput, time){
     let points = card.points
     let trans1 = card.Translation1
     let trans2 = card.Translation2
@@ -404,6 +409,3 @@ function checkCard(card, userInput, time){
     }
 }
 
-module.exports = {
-    cardQueue, checkCard
-}
