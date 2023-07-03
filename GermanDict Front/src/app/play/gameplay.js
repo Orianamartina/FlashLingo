@@ -314,7 +314,7 @@ yellowCards : [,
     "Sentence3": null
 }]}
 
-
+//shuffle array function
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -322,7 +322,7 @@ function shuffleArray(array) {
     }
     return array;
 }
-
+//function to add points to each card
 function formatCards(color, cards){
     if (color == "red"){
         cards.forEach(element => {
@@ -340,7 +340,7 @@ function formatCards(color, cards){
     }
     if (color == "green"){
         cards.forEach(element => {
-            element.points = 7
+            element.points = 6
         }) 
         return cards
     }
@@ -351,6 +351,7 @@ function formatCards(color, cards){
         return cards
     }
 }
+// Set card arrays to play
 function gameCardsFormatted(cards){
     const redCards = formatCards("red", cards.redCards)
     const yellowCards = formatCards("yellow", cards.yellowCards)
@@ -360,13 +361,46 @@ function gameCardsFormatted(cards){
     return (array)
 }
 
+// Set card Queue to shuffle randomly the cards array, ready to play.
 const cardQueue = shuffleArray(gameCardsFormatted(gameCards))
 
-function checkCard(card){
-    
+// Check answer and decide how to proceed with the word's score
+
+function checkCard(card, userInput, time){
+    let points = card.points
+    let germanWord = card.German
+    let trans1 = card.Translation1
+    let trans2 = card.Translation2
+    let trans3 = card.Translation3
+    let fast = time < 4
+    if (userInput == trans1 || userInput == trans2 || userInput == trans3 && fast){
+        if (points === 0){
+            points = 6
+        }
+        else{
+            points = points++
+        }
+       
+    }
+    if (userInput == trans1 || userInput == trans2 || userInput == trans3 && !fast){
+        if (points === 0){
+            points = 4
+        }else{
+            points = points
+        }
+        
+    }
+    else{
+        if  (points === 0){
+            points = 1
+        }else{
+          points = points--  
+        }
+        
+    }
+    return points
 }
 
 
 
-
-
+console.log(cardQueue)
