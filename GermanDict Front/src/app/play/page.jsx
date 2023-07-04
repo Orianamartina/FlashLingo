@@ -12,28 +12,30 @@ export default function Play(){
  
     const [cardsPlayed, setCardsPlayed] = useState([])
     const [index, setIndex] = useState(0)
+    const [finished, setFinished] = useState(false)
+
     const handleClick = (answer, time) => {
         const points = checkCard(cards[index], answer, time)
-        //If it's not the first time that the word appears, then we just add the points to the current points.
-        const cardAlreadyPlayed = cardsPlayed.find(card => card.word === cards[index].word)
-        if (cardAlreadyPlayed){
-            let card = cardAlreadyPlayed
-            card.points = card.points + points
-            setCardsPlayed([...cardsPlayed, card])
-        }else{
-            //if the user did not go through this word yet, then we push it into the array
-            const newCard = cards[index]
-            newCard.points = newCard.points + points
-            setCardsPlayed([...cardsPlayed, newCard])
-        }
+        const newCard = cards[index]
+        newCard.points = points
+        setCardsPlayed([...cardsPlayed, newCard ])
+        
         //get a new word
         console.log(cardsPlayed)
-        setIndex(index + 1)
-     
+        if (index < cards.length){
+            setIndex(index + 1)
+        }
+        else{
+            setFinished(true)
+        }
+       
+    }
+    const saveSession = () =>{
 
     }
     return (
         <div>
+            <button onClick={saveSession}>End Session</button>
             {cards?(
                 <div>
 
@@ -41,7 +43,8 @@ export default function Play(){
 
             
                 </div>):(redirect('/dashboard'))
-            }
+            }{finished? saveSession(): ""}
+            
         </div>
         
     )
