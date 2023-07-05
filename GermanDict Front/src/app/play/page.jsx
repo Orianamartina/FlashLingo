@@ -53,6 +53,7 @@ export default function Play(){
         else{
             setFinished(true)
         }
+        setTranslation([])
         
     }
     const saveSession = () =>{
@@ -66,6 +67,7 @@ export default function Play(){
                 <div>
 
                  <Cards card={cards[index]} handleClick={handleClick} next={nextWord}></Cards>
+                 {translation.length? translation.map(translation => <h1>{translation}</h1>): ""}
 
             
                 </div>):(redirect('/dashboard'))
