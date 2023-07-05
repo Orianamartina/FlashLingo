@@ -2,6 +2,7 @@ import { USERTOKEN, GETLEVEL, FORMATLEVEL} from "../action-types"
 const initialState = {
     userToken: "",
     gameSession: {},
+    sessionId: "",
     gameCards: []
 }
 
@@ -14,12 +15,9 @@ const reducer = (state = initialState, action) => {
             return { ...state, userToken: action.payload };
         }
         case GETLEVEL:{
-            return {...state, gameSession: action.payload }
+            return {...state, gameSession: action.payload.queue, sessionId: action.payload.id }
         }
-        case FORMATLEVEL:{
-            return {...state, gameCards:action.payload}
-        }
-
+        
         default: {
             return state
         }

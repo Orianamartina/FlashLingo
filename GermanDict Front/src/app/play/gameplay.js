@@ -40,17 +40,20 @@ export function formatCards(color, cards){
 }
 // Set card arrays to play
 export function gameCardsFormatted(cards){
+    const sessionId = cards.id
     const redCards = formatCards("red", cards.red_cards)
     const yellowCards = formatCards("yellow", cards.yellow_cards)
     const greenCards = formatCards("green", cards.green_cards)
     const unclassifiedCards = formatCards("white", cards.unclassified_cards)
     let array = unclassifiedCards.concat(redCards, redCards, redCards, yellowCards, yellowCards, greenCards)
-    return (array)
+    return ({array: array, id: sessionId})
 }
 
 export function cardQueue(cards){
-    const queue = shuffleArray(gameCardsFormatted(cards))
-    return queue
+    let cardsFormated = gameCardsFormatted(cards)
+    const queue = shuffleArray(cardsFormated.array)
+    const id = cardsFormated.id
+    return {queue, id}
 }
 // Check answer and decide how to proceed with the word's score
 export function checkCard(card, input, time){
@@ -79,23 +82,96 @@ export function checkCard(card, input, time){
 
 //function to format cards to save game session
 
-function formatEndOfGame(cards){
+export function endSession(cards){
     let databaseInfo = [{
         red_cards:[],
         yellow_cards:[],
         green_cards:[],
         unclassified_cards:[],
     }]
-    let processedCards = []
     let redCards = []
     let yellowCards = []
     cards.forEach(card => {
+        
         if (card.color === "green"){
-            if(card.points === -1){
+            if(card.points === -1 || card.points === 0){
+                delete card.color
+                delete card.points
+                databaseInfo.yellow_cards.push(card)
+            }else{
                 delete card.color
                 delete card.points
                 databaseInfo.green_cards.push(card)
             }
         }
+        if (card.color === "yellow"){
+            let foundCard = yellowCards.find(processedCard => processedCard.word === card.word)
+            if (foundCard){
+                let points = foundCard.points + card.points
+                if (points == 2){
+                    delete card.color
+                    delete card.points
+                    databaseInfo.green_cards.push(card)
+                }
+                if (points == 1 || points == 0){
+                    delete card.color
+                    delete card.points
+                    databaseInfo.yellow_cards.push(card)
+                }
+                if (points < 0){
+                    delete card.color
+                    delete card.points
+                    databaseInfo.red_cards.push(card)
+                }
+            }
+            else{
+                yellowCards.push(card)
+            }
+        }
+        if (card.color === "red"){
+            let foundCard = redCards.filter(processedCard => processedCard.word === card.word)
+            if (foundCard.length === 2){
+                let points = foundCard[0].points + foundCard[1].points + card.points
+                if(points == 3){
+                    delete card.color
+                    delete card.points
+                    databaseInfo.yellow_cards.push(card)
+                }
+                if (points < 3){
+                    delete card.color
+                    delete card.points
+                    databaseInfo.red_cards.push(card)
+                }
+                let foundCardIndex = redCards.findIndex(processedCard => processedCard.word === card.word);
+                while (foundCardIndex !== -1) {
+                    redCards.splice(foundCardIndex, 1);
+                    foundCardIndex = redCards.findIndex(processedCard => processedCard.word === card.word);
+                }
+            }
+            if (foundCard.length <2){
+                redCards.push(card)
+            }
+            
+        }
+        if (card.color === "white"){
+            
+            if (points == 1){
+                delete card.color
+                delete card.points
+                databaseInfo.green_cards.push(card)
+            }
+            if (points == 0){
+                delete card.color
+                delete card.points
+                databaseInfo.yellow_cards.push(card)
+            }
+            else{
+                delete card.color
+                delete card.points
+                databaseInfo.red_cards.push(card)
+            }
+        
+        }
     })
+    return databaseInfo
 }

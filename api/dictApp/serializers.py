@@ -24,4 +24,4 @@ class GameSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GameSession
-        fields = ('green_cards', 'yellow_cards', 'red_cards', 'unclassified_cards')
+        fields = ('green_cards', 'yellow_cards', 'red_cards', 'unclassified_cards', "id")

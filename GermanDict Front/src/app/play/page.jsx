@@ -4,12 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import { useEffect, useState } from "react";
 import { cardQueue, checkCard, formatCards,} from "./gameplay";
 import { redirect } from 'next/navigation';
+import { endSession } from "./gameplay";
 
 
 export default function Play(){
     const dispatch = useDispatch()
     const cards = useSelector(state => state.gameSession)
- 
+    const id = useSelector(state => state.sessionId)
     const [cardsPlayed, setCardsPlayed] = useState([])
     const [index, setIndex] = useState(0)
     const [finished, setFinished] = useState(false)
@@ -31,7 +32,7 @@ export default function Play(){
        
     }
     const saveSession = () =>{
-
+        console.log (endSession(cardsPlayed))
     }
     return (
         <div>
