@@ -26,6 +26,26 @@ export default function Play(){
         //get a new word
        
     }
+    useEffect(() => {
+        // Add event listeners when component mounts
+        const handleKeyPressWithAnswer = (event) => handleKeyPress(event, answer, setAnswer);
+        window.addEventListener('keydown', handleKeyPressWithAnswer);
+        
+        // Clean up event listeners when component unmounts
+        return () => {
+            window.removeEventListener('keydown', handleKeyPressWithAnswer);
+            };
+    }, [answer, setAnswer]);
+    const handleKeyPress = (event, answer, setAnswer) => {
+        if (event.key === 'Enter') {
+            // Action when Enter key is pressed
+            props.handleClick(answer, 3)
+            setAnswer("")
+        } else if (event.key === 'ArrowRight') {
+            // Action when Right Arrow key is pressed
+            props.next()
+        }
+    };
     const nextWord = () => {
         if (index < cards.length){
             setIndex(index + 1)
@@ -35,8 +55,6 @@ export default function Play(){
         }
         
     }
-   
-    
     const saveSession = () =>{
        const response = axios.post(`http://127.0.0.1:8000/game-session/update/${id}/`, endSession(cardsPlayed))
         console.log(response.data)
