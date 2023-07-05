@@ -83,12 +83,9 @@ export function checkCard(card, input, time){
 //function to format cards to save game session
 
 export function endSession(cards){
-    let databaseInfo = [{
-        red_cards:[],
-        yellow_cards:[],
-        green_cards:[],
-        unclassified_cards:[],
-    }]
+    const red_cards = []
+    const green_cards =[]
+    const yellow_cards = []
     let redCards = []
     let yellowCards = []
     cards.forEach(card => {
@@ -154,24 +151,24 @@ export function endSession(cards){
             
         }
         if (card.color === "white"){
-            
+            let points = card.points
             if (points == 1){
                 delete card.color
                 delete card.points
-                databaseInfo.green_cards.push(card)
+                green_cards.push(card)
             }
             if (points == 0){
                 delete card.color
                 delete card.points
-                databaseInfo.yellow_cards.push(card)
+                yellow_cards.push(card)
             }
             else{
                 delete card.color
                 delete card.points
-                databaseInfo.red_cards.push(card)
+                red_cards.push(card)
             }
         
         }
     })
-    return databaseInfo
+    return {red_cards, yellow_cards, green_cards}
 }

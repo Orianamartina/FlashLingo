@@ -18,7 +18,8 @@ export default function Cards(props){
 
             <h1>{props.card.word}</h1>
             <input type="text" value={answer} onChange={(e) => handleInputChange(e)}/>
-            <button onClick={() =>{props.handleClick(answer, 5); setAnswer("")}}>Check</button>
+            <button onClick={() =>{props.handleClick(answer, 3); setAnswer("")}}>Check</button>
+            <button onClick={props.next}>next</button>
             <h1>{answer}</h1>
             
         </div>
