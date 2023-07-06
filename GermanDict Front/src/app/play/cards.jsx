@@ -8,7 +8,7 @@ export default function Cards(props){
    
     const [answer, setAnswer] = useState()
     const [startTime, setStartTime] = useState(null);
-    const [submitted, setSubmitted] = useState(false)
+    const submitted = props.submitted
   
     const startTimer = () => {
       setStartTime(Date.now());
@@ -27,7 +27,6 @@ export default function Cards(props){
             if(answer.length > 0 && !submitted){
                 const elapsedTime = (Date.now() - startTime) / 1000
                 props.handleClick(answer, elapsedTime);
-                setSubmitted(!submitted)
                 setAnswer('');
             }
             
@@ -35,7 +34,6 @@ export default function Cards(props){
         } else if (event.key === 'ArrowRight') {
             // Action when Right Arrow key is pressed
             if(submitted){
-                setSubmitted(!submitted)
                 startTimer()
                 props.next()
             }
@@ -52,7 +50,6 @@ export default function Cards(props){
             <button onClick={() =>{
                 const elapsedTime = (Date.now() - startTime) / 1000
                 props.handleClick(answer, elapsedTime);
-                setSubmitted(!submitted)
                 setAnswer('');
             }}>Check</button>
             <button onClick={props.next}>next</button>

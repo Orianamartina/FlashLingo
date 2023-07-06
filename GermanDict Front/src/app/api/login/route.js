@@ -33,7 +33,6 @@ export  async function POST(request){
                   }})
     
             const token = csrfToken.data.csrf_token
-            
             const data = await axios.post(`${apiUrl}user/`, 
                 body,
                 {headers: {
@@ -54,7 +53,7 @@ export  async function POST(request){
             return new Response(dataResponse, {
                 status: 200,
                 headers:{
-                    'Set-Cookie': `token=${accessToken}`,
+
                     "Content-Type": "application/json"
                 }
             })

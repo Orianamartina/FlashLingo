@@ -1,8 +1,8 @@
-import { USERTOKEN, GETLEVEL, FORMATLEVEL} from "../action-types";
+import { USERTOKEN, GETLEVEL} from "../action-types";
 import { cardQueue } from "@/app/play/gameplay";
 import axios from "axios";
 const apiUrl = "http://127.0.0.1:8000/"
-
+import Cookies from "js-cookie";
 
 export const userToken= (loginCredentials) => {
     return async function(dispatch){
@@ -33,10 +33,4 @@ export const getLevel = (level, userId) => {
         
     }
 
-}
-export const formatLevel = (cards) => {
-    return function(dispatch){
-        let data = cardQueue(cards)
-        return dispatch({type: FORMATLEVEL, payload: data })
-    }
 }

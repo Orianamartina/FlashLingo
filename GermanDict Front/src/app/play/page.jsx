@@ -1,22 +1,24 @@
 "use client"
 import Cards from "./cards"
 import {useDispatch, useSelector} from "react-redux";
-import { useEffect, useState } from "react";
-import { cardQueue, checkCard, formatCards,} from "./gameplay";
+import {useState } from "react";
+import {  checkCard, endSession} from "./gameplay";
 import { redirect } from 'next/navigation';
-import { endSession } from "./gameplay";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 
 export default function Play(){
-
     const cards = useSelector(state => state.gameSession)
     const id = useSelector(state => state.sessionId)
+    console.log(cards)
     const [cardsPlayed, setCardsPlayed] = useState([])
     const [index, setIndex] = useState(0)
     const [finished, setFinished] = useState(false)
     const [translation, setTranslation] = useState("")
-    console.log(cardsPlayed)
+    const [submitted, setSubmitted] = useState(false)
+
+
     const handleClick = (answer, time) => {
         let card = cards[index]
         const points = checkCard(card, answer, time)
@@ -25,45 +27,52 @@ export default function Play(){
         newCard.time = time
         setCardsPlayed([...cardsPlayed, newCard ])
         setTranslation([card.translation1, card.translation2, card.translation3])
-        //get a new word
-       
+        setSubmitted(!submitted)
+
     }
    
  
     const nextWord = () => {
-        if (index < cards.length){
+        if (index < cards.length -1 && submitted){
             setIndex(index + 1)
         }
-        else{
+        if(index === cards.length -1 && submitted){  
             setFinished(true)
+            setSubmitted(!submitted)
+            endCurrentSession()
         }
         setTranslation([])
         
     }
-    const saveSession =async () =>{
-        const csrfToken = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials: true})
-        let token = csrfToken.data.csrf_token
-       const response = await axios.post(`http://127.0.0.1:8000/game-session/update/${id}/`, endSession(cardsPlayed), {headers: {
-
-        "Content-Type": "application/json",
-        'X-CSRFToken': token,
-        withCredentials: true,}})
-        console.log(response.data)
-   
-    
+    const [error, setError]=useState()
+    const endCurrentSession =async() =>{
+        try {
+            endSession(cardsPlayed)
+            const token = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials:true})
+            const csrf = token.data.csrf_token
+            const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: cardsPlayed, token: csrf})
+            if (saveSession.status === 200) {
+                const router = useRouter();
+                router.push('/dashboard');
+            }
+        } catch (error) {
+            setError(error)
+        }
+        
     }
     return (
         <div>
-            <button onClick={saveSession}>End Session</button>
+ 
             {cards?(
                 <div>
 
-                 <Cards card={cards[index]} handleClick={handleClick} next={nextWord} ></Cards>
+                 <Cards card={cards[index]} handleClick={handleClick} next={nextWord} submitted={submitted} setSubmitted={setSubmitted}></Cards>
                  {translation.length? translation.map(translation => <h1>{translation}</h1>): ""}
 
             
                 </div>):(redirect('/dashboard'))
-            }{finished? saveSession(): ""}
+            }
+            <h1>{error?error:""}</h1>
             
         </div>
         

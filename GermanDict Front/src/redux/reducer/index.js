@@ -1,4 +1,4 @@
-import { USERTOKEN, GETLEVEL, FORMATLEVEL} from "../action-types"
+import { USERTOKEN, GETLEVEL, FORMATLEVEL, SAVESESSION} from "../action-types"
 const initialState = {
     userToken: "",
     gameSession: {},
@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
         case GETLEVEL:{
             return {...state, gameSession: action.payload.queue, sessionId: action.payload.id }
         }
-        
+       
         default: {
             return state
         }

@@ -166,8 +166,7 @@ def setUpGameSessions(request):
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+
 def getGameSession(request):
     if request.method == 'GET':
       
@@ -195,7 +194,7 @@ def update_game_session(request, session_id):
             game_session.red_cards.clear()
             game_session.yellow_cards.clear()
             game_session.green_cards.clear()
-            game_session.unclassified_card.clear()
+            game_session.unclassified_cards.clear()
 
             for classification, words in words_data.items():
                 if classification not in ['red_cards', 'yellow_cards', 'green_cards', 'unclassified_cards']:
