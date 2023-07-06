@@ -188,8 +188,7 @@ def update_game_session(request, session_id):
         try:
             game_session = GameSession.objects.get(id=session_id)
             
-            words_data = request.POST.dict()  # Assuming data is passed as form data
-            
+            words_data =  json.loads(request.body) # Assuming data is passed as form data
             # Clear all card fields
             game_session.red_cards.clear()
             game_session.yellow_cards.clear()
@@ -197,13 +196,10 @@ def update_game_session(request, session_id):
             game_session.unclassified_cards.clear()
 
             for classification, words in words_data.items():
-                if classification not in ['red_cards', 'yellow_cards', 'green_cards', 'unclassified_cards']:
-                    return JsonResponse({'error': 'Invalid classification'}, status=400)
                 
-                words_list = words.split(',')
-                
-                for word_id in words_list:
-                    german_word = GermanWord.objects.get(id=word_id)
+                for word in words:
+                  
+                    german_word = GermanWord.objects.get(id=word["id"])
                     
                     if classification == 'green_cards':
                         game_session.green_cards.add(german_word)

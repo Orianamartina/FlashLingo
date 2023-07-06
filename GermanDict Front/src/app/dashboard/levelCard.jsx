@@ -14,8 +14,8 @@ export default function LevelCard(props){
     const dispatch = useDispatch()
     const refreshToken = Cookies.get('refreshToken');
     const token = Cookies.get('accessToken')
-    const handleLevelClick = (level)  => {
-        dispatch(getLevel(level, props.userId, refreshToken))
+    const handleLevelClick =async (level)  => {
+        await dispatch(getLevel(level, props.userId, refreshToken))
         push(`/play`)
     }
     

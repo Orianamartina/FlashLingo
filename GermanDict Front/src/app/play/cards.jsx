@@ -54,6 +54,7 @@ export default function Cards(props){
             }}>Check</button>
             <button onClick={props.next}>next</button>
             <h1>{answer}</h1>
+
        
         </div>
     )
