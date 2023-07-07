@@ -1,7 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,400&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600&display=swap');
 :root{
     --green: #27b46e;
     --yellow: #EDC02c;
@@ -9,12 +7,18 @@
     --lightBlue: #A2eeeb;
     --cream: #f3e2b3;
 
+    --1: #eab0fc;
+    --2: #aa4ff6;
+    --3: #8d39ec;
+    --4: #7827e6;
 
     /* font */
 
-    --font: 'Rubik', sans-serif;
+
+    --font2:'Cabin', sans-serif
 }
  
 body{
     background-color: var(--cream);
+   
 }

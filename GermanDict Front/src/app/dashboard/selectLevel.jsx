@@ -1,26 +1,18 @@
+import { useState } from "react";
 import LevelCard from "./levelCard";
-
+import style from "./styles/levels.module.css"
 
 
 
 
 export default function SelectLevel(props){
 
-    const items = [];
-
-    for (let i = 1; i < 11; i++) {
-      items.push(i);
-    }
-    
+   
+   
     return (
 
-        <div>
-            {items.map(level => {
-                return <LevelCard number={level} userId={props.userId}></LevelCard>
-            })}
-
-
-            
+        <div className={style.levelDashboard}>
+            <LevelCard items={items} userId={props.userId}></LevelCard>
         </div>
     )
 }

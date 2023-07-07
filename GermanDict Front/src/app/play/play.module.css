@@ -1,54 +1,134 @@
 .red{
-    background-color: red;
+    background-color: var(--orange);
     transition: 1s;
 }
 .yellow{
-    background-color: yellow;
+    background-color: var(--yellow);
     transition: 1s;
 }
 .green{
-    background-color: green;
+    background-color: var(--green);
     transition: 1s;
 }
 .neutral{
-    background-color: cornflowerblue;
+    background-color: var(--lightBlue);
     transition: 1s;
 }
 
-
-.cardContainer{
-    background-color: transparent;
-    width: 300px;
-    height: 200px;
-    border: 1px solid #f1f1f1;
-    perspective: 1000px;
-}
-.innerCard {
-    position: relative;
+.container{
+    font-family: var(--font);
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
+    display: block;
+    
+}
+.cardContainer{
+    background-color: transparent;
+    margin: auto;
+    margin-top: 50%;
+    max-width: 80vw;
+    height: 30vh;
+    perspective: 1000px;
+    
+}
+
+.innerCard {
+    position: relative;
+    max-width: 100%;
+    height: 70vw;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    margin: 0;
 }
 .flipped .innerCard {
     transform: rotateY(180deg);
 }
 .frontCard, .backCard {
+    display: block;
     position: absolute;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    margin: auto;
+    box-shadow: 10px 10px 3px;
+    border-radius: 10px;
 }
 .backCard {
     color: white;
     transform: rotateY(180deg);
-  }
+}
+.frontCard{
+    background-color: var(--lightBlue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+.input{
+    width: 30%;
+    border: none;
+    text-align: center;
+    font-size: 4vh;
+}
+.input:focus{
+    border: none;
+    outline: none;
+}
+
+.buttons{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly
+}
+.micContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    margin-top: 40%; 
+}
 .micDisabled{
     pointer-events: none;
-    
+    height: 100%;
     /* for "disabled" effect */
     opacity: 0.5;
     background: #CCC;
+}
+.button{
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 4vh;
+    width: fit-content;
+}
+.button:hover{
+    cursor: pointer;
+}
+@media (min-width: 700px)  {
+    .container{
+        height: 50vh;
+    }
+    .cardContainer{
+        margin-top: 5%;
+        width: 50%;
+        height: 100%;
+        
+    }
+    .frontCard{
+        height: 50vh;
+
+    }
+    .backCard{
+        height: 50vh;
+        
+    }
+    .micContainer{
+        margin: 10%;
+    }
 }

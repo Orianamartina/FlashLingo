@@ -1,10 +1,10 @@
 "use client"
 import UserProfile from "./UserProfile"
 import UserStatistics from "./UserStatistics"
-import ContinueButton from "./ContinueButton"
+import Logo from "./Logo";
 import SelectLevel from "./selectLevel";
 import { useRouter } from 'next/navigation';
-
+import style from "./styles/dashboard.module.css"
    
 export default function Dashboard(){
 
@@ -26,6 +26,7 @@ export default function Dashboard(){
                     <UserProfile></UserProfile>
                     <UserStatistics></UserStatistics>   
                     <SelectLevel userId={user.id}></SelectLevel>
+                    <Logo></Logo>
                 </>
             )
             

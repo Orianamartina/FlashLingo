@@ -36,6 +36,9 @@ export default function Cards(props){
         if (!browserSupportsSpeechRecognition) {
             setAllowMic(false)   
         }
+        else{
+            setAllowMic(true)
+        }
     }, []);
 
     const handleKeyPress = (event, answer, setAnswer) => {
@@ -58,13 +61,25 @@ export default function Cards(props){
     };
     //
     return(
-        <div>
+        <div className={style.container}>
             <div className={`${style.cardContainer} ${submitted? style.flipped: ""}`}>
                 <div className={style.innerCard}>
                     <div className={style.frontCard}>
-                        {props.card.word}
-                        <input type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
-                    </div>
+                        <h1 className={style.word}>{props.card.word}</h1>
+                        
+                        <input className={style.input} type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
+                    
+                        <button className={style.button} onClick={() =>{
+                            const elapsedTime = (Date.now() - startTime) / 1000
+                            props.handleClick(answer, elapsedTime);
+                            console.log(elapsedTime)
+                            console.log(answer)
+                            setAnswer('');}}>Check
+                            
+                        </button>
+                            
+            </div> 
+                    
                     <div className={`${style.backCard} ${style[answerStatus]}` }>
                         {answerStatus === "red"?
                             <div>
@@ -75,30 +90,23 @@ export default function Cards(props){
                             <h1> "Good job, keep practicing!"</h1>:
                             answerStatus === "green"?
                             <h1>Well done!</h1>: ""
-                            }
+                            }<button className={style.button} onClick={() => {props.next();  startTimer()}}>next</button>
                     </div>
 
                 </div>
                 
                 
             </div>
-            <div className={allowMic? style.micEnabled: style.micDisabled}>
+            
+            <div className={`${allowMic? style.micEnabled: style.micDisabled} ${style.micContainer}`}>
                 <p>Microphone: {listening ? 'on' : 'off'}</p>
-                <button onClick={() =>SpeechRecognition.startListening({language: "en-US"})}>Listen</button>
-                <button onClick={() => {SpeechRecognition.stopListening, setAnswer(transcript)}}>Stop</button>
-                <button onClick={resetTranscript}>Reset</button>
+                <button className={style.button} onClick={() =>SpeechRecognition.startListening({language: "en-US"})}>Listen</button>
+                <button className={style.button} onClick={() => {SpeechRecognition.stopListening, setAnswer(transcript)}}>Stop</button>
+                <button className={style.button} onClick={resetTranscript}>Reset</button>
                 <p>{transcript}</p>
             </div>
             
-            <button onClick={() =>{
-                const elapsedTime = (Date.now() - startTime) / 1000
-                props.handleClick(answer, elapsedTime);
-                console.log(elapsedTime)
-                console.log(answer)
-                setAnswer('');
-                
-            }}>Check</button>
-            <button onClick={() => {props.next();  startTimer()}}>next</button>
+            
         </div>
     )
    

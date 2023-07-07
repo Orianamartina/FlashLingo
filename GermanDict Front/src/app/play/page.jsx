@@ -11,7 +11,6 @@ import { redirect } from "next/dist/server/api-utils";
 export default function Play(){
     const cards = useSelector(state => state.gameSession)
     const id = useSelector(state => state.sessionId)
-    console.log(cards)
     const [cardsPlayed, setCardsPlayed] = useState([])
     const [index, setIndex] = useState(0)
     const [finished, setFinished] = useState(false)
@@ -75,7 +74,6 @@ export default function Play(){
         }
         
     }
-    console.log(cards)
     let card = cards[index]
     return (
         <div>
