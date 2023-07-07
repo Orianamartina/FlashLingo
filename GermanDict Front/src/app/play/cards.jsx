@@ -1,9 +1,9 @@
 "use client"
-
+import 'regenerator-runtime/runtime'
 import { useEffect, useState } from "react";
 import { redirect } from "next/dist/server/api-utils";
 import style from "./play.module.css"
-
+import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
 
 export default function Cards(props){
    
@@ -12,6 +12,17 @@ export default function Cards(props){
     const submitted = props.submitted
     const answerStatus = props.answerStatus
     const [flipped, setFlipped] = useState(false)
+
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+    const [allowMic, setAllowMic] = useState()
+   
+
+
     const startTimer = () => {
       setStartTime(Date.now());
     };
@@ -21,7 +32,10 @@ export default function Cards(props){
     }
     
     useEffect(() => {
-        startTimer();
+        startTimer(); 
+        if (!browserSupportsSpeechRecognition) {
+            setAllowMic(false)   
+        }
     }, []);
 
     const handleKeyPress = (event, answer, setAnswer) => {
@@ -51,38 +65,41 @@ export default function Cards(props){
                         {props.card.word}
                         <input type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
                     </div>
-                    <div className={style.backCard}>
-                        {props.card.translation1}
+                    <div className={`${style.backCard} ${style[answerStatus]}` }>
+                        {answerStatus === "red"?
+                            <div>
+                                <h1>Right Answers:</h1>
+                                <h1>{props.card.translation1}</h1>
+                            </div>
+                             : answerStatus === "yellow"? 
+                            <h1> "Good job, keep practicing!"</h1>:
+                            answerStatus === "green"?
+                            <h1>Well done!</h1>: ""
+                            }
                     </div>
 
                 </div>
                 
                 
             </div>
+            <div className={allowMic? style.micEnabled: style.micDisabled}>
+                <p>Microphone: {listening ? 'on' : 'off'}</p>
+                <button onClick={() =>SpeechRecognition.startListening({language: "en-US"})}>Listen</button>
+                <button onClick={() => {SpeechRecognition.stopListening, setAnswer(transcript)}}>Stop</button>
+                <button onClick={resetTranscript}>Reset</button>
+                <p>{transcript}</p>
+            </div>
+            
             <button onClick={() =>{
                 const elapsedTime = (Date.now() - startTime) / 1000
                 props.handleClick(answer, elapsedTime);
+                console.log(elapsedTime)
+                console.log(answer)
                 setAnswer('');
+                
             }}>Check</button>
-            <button onClick={props.next}>next</button>
+            <button onClick={() => {props.next();  startTimer()}}>next</button>
         </div>
     )
-    return (   
-        <div className={style.container}>
-            <div className={`${style.background} ${submitted? style.flipped : ''} ${answerStatus === 'red' ? style.red : answerStatus === 'green' ? style.green : answerStatus === 'yellow' ? style.yellow : style.neutral} `}>
-
-                <h1 className={style.content}>{ props.card.word}</h1>
-                <input type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
-                <button onClick={() =>{
-                    const elapsedTime = (Date.now() - startTime) / 1000
-                    props.handleClick(answer, elapsedTime);
-                    setAnswer('');
-                }}>Check</button>
-                <button onClick={props.next}>next</button>
-                <h1>{answer}</h1>
-
-        
-            </div>
-        </div>
-    )
+   
 }

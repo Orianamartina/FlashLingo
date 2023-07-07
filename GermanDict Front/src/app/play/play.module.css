@@ -42,7 +42,13 @@
     backface-visibility: hidden;
 }
 .backCard {
-    background-color: dodgerblue;
     color: white;
     transform: rotateY(180deg);
   }
+.micDisabled{
+    pointer-events: none;
+    
+    /* for "disabled" effect */
+    opacity: 0.5;
+    background: #CCC;
+}
