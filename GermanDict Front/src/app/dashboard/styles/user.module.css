@@ -1,0 +1,21 @@
+.userProfileContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+.profileButtonsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.icon{
+    width: 8vw;
+    height: 8vw;
+    padding: 5vw;
+}
+.username{
+    margin-left: 4%;
+    font-size: 6vw;
+    font-weight: 200;
+}

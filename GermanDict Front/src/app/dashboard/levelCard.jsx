@@ -36,7 +36,7 @@ export default function LevelCard(props){
             <Image onClick={handleLevelDown} className={style.arrow1} src={arrow}></Image>
             <button className={style.levelButton} onClick={() => handleLevelClick(index)}>{index}</button>
             <Image onClick={handleLevelUp} className={style.arrow2} src={arrow}></Image>
-
+            
             
             
         </div>

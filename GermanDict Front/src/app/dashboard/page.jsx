@@ -20,7 +20,7 @@ export default function Dashboard(){
     
     return (
 
-        <div>
+        <div className={style.dashboardContainer}>
             {!user? push("/login"):(
                 <>
                     <UserProfile></UserProfile>
