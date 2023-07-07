@@ -16,5 +16,5 @@
 }
  
 body{
-    background-color: #81cad6;
+    background-color: var(--cream);
 }

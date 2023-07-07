@@ -507,6 +507,6 @@ function endSession(cards){
     })
     return {red_cards, yellow_cards, green_cards}
 }
-console.log(endSession(cards))
+
 
 module.exports={cardQueue, endSession, checkCard, formatCards}

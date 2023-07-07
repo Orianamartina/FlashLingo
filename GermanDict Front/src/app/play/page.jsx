@@ -5,21 +5,19 @@ import {useState } from "react";
 import {  checkCard, endSession} from "./gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
-import { useRouter } from 'next/router';
 import { redirect } from "next/dist/server/api-utils";
 
 
 export default function Play(){
     const cards = useSelector(state => state.gameSession)
     const id = useSelector(state => state.sessionId)
-    const router = useRouter();
+    console.log(cards)
     const [cardsPlayed, setCardsPlayed] = useState([])
     const [index, setIndex] = useState(0)
     const [finished, setFinished] = useState(false)
     const [translation, setTranslation] = useState("")
     const [submitted, setSubmitted] = useState(false)
-    console.log(cards)
-
+    const [answerStatus, setAnswerStatus] = useState()
     const handleClick = (answer, time) => {
         let card = cards[index]
         const points = checkCard(card, answer, time)
@@ -28,6 +26,15 @@ export default function Play(){
         setCardsPlayed([...cardsPlayed, newCard ])
         setTranslation([card.translation1, card.translation2, card.translation3])
         setSubmitted(true)
+        if(points === 1){
+            setAnswerStatus("green")
+        }
+        if(points ===-1){
+            setAnswerStatus("red")
+        }
+        if(points === 0){
+            setAnswerStatus("yellow")
+        }
       
     }
    
@@ -36,6 +43,7 @@ export default function Play(){
         if (index < cards.length -1 && submitted){
             setIndex(index + 1)
             setSubmitted(false)
+            setAnswerStatus("neutral")
         }
         if(index === cards.length -1 && submitted){  
             setFinished(true)
@@ -67,6 +75,8 @@ export default function Play(){
         }
         
     }
+    console.log(cards)
+    let card = cards[index]
     return (
         <div>
             
@@ -74,7 +84,14 @@ export default function Play(){
                         <SessionStats yellow_cards={yellowCardsEnd} green_cards ={greenCardsEnd} red_cards={redCardsEnd}></SessionStats> </div>):(
                 <div>
                    
-                    <Cards card={cards[index]} handleClick={handleClick} next={nextWord} submitted={submitted} setSubmitted={setSubmitted}></Cards>
+                    <Cards
+                        card={card} 
+                        handleClick={handleClick} 
+                        next={nextWord} 
+                        submitted={submitted} 
+                        answerStatus ={answerStatus}>
+                        
+                    </Cards>
                     {translation.length? translation.map(translation => {if(translation != null){<h1>{translation}</h1>}}): ""}
 
                 </div>)}
