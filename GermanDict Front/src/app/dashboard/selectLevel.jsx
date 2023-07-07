@@ -12,7 +12,7 @@ export default function SelectLevel(props){
     return (
 
         <div className={style.levelDashboard}>
-            <LevelCard items={items} userId={props.userId}></LevelCard>
+            <LevelCard  userId={props.userId}></LevelCard>
         </div>
     )
 }

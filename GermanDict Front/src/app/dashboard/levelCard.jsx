@@ -5,8 +5,8 @@ import { getLevel } from "@/redux/actions";
 import { useState } from 'react';
 import {useDispatch} from "react-redux";
 import style from "./styles/levels.module.css"
-
-
+import Image from 'next/image';
+import arrow from "../../../public/arrow-right.png"
 export default function LevelCard(props){
 
     const {push} = useRouter()
@@ -31,10 +31,12 @@ export default function LevelCard(props){
     
     return (
 
-        <div>
-            <button onClick={handleLevelDown}>{"<<"}</button>
+        <div className={style.levelButtonOptions}>
+
+            <Image onClick={handleLevelDown} className={style.arrow1} src={arrow}></Image>
             <button className={style.levelButton} onClick={() => handleLevelClick(index)}>{index}</button>
-            <button onClick={handleLevelUp}>{">>"}</button>
+            <Image onClick={handleLevelUp} className={style.arrow2} src={arrow}></Image>
+
             
             
         </div>
