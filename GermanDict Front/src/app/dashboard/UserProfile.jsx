@@ -16,9 +16,17 @@ export default function UserProfile(props){
 
         <div className={style.userProfileContainer}> 
             <div className={style.profileButtonsContainer}>
-                <LogOutButton></LogOutButton>
-           
-               <Image className={style.icon} src={userImg}></Image>
+                <div className={style.iconContainer}>
+                  <LogOutButton></LogOutButton>
+                  <span className={style.buttonText}>Log out</span>
+                </div>
+                  
+               
+                <div className={style.iconContainer}>
+                  <Image className={style.icon} src={userImg}></Image>
+                  <span className={style.buttonText}>Profile</span>
+                </div>
+               
             </div> 
           
             <div>

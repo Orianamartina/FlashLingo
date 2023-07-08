@@ -10,10 +10,10 @@
 
 .levelDashboard{
     display: block;
-    background-color: transparent;
+    background-color: var(--2);
     border: 1px solid black;
     box-shadow: 3px 3px 0px;
-    max-width: 100%;
+    width: 90%;
     height: fit-content;
     border-radius: 10px;
     padding: 5%;
@@ -27,6 +27,7 @@
 }
 .levelText{
     font-size: 6vw;
+    color: white;
 }
 .arrow1, .arrow2{
     width: 10vw;
@@ -42,21 +43,28 @@
 }
 @media (min-width: 700px) {
     .levelButton{
-        background-color: var(--1);
-        border: none;
-        
+        font-size: 4vw;
+        border: none;     
+    }
+    .arrow1, .arrow2{
+        height: 3vw;
+        width: 3vw;
     }
     .levelButton:hover{
         cursor: pointer;
     }
-    
     .levelDashboard{
-        background-color: var(--2);
-        max-width: 50%;
+        max-width: 30%;
         max-height: 50vh;
         display: flex;
+        flex-direction: column;
         border-radius: 10px;
-        padding: 5%;
+        padding: 2%;
+
     
+    }
+    .levelText{
+        font-size: 3vw;
+
     }
 }

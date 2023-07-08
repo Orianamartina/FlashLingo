@@ -1,4 +1,30 @@
 .dashboardContainer{
     width: 90%;
     margin: auto;
+    height: 100vh;
+}
+.squaresContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+.logo{
+    width: 60vw;
+    height: 60vw;
+}
+
+
+
+@media (min-width:700px) {
+    .logo{
+        width: 20vw;
+        height: 20vw;
+    }
+    .squaresContainer{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
 }
