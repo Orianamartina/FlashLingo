@@ -16,10 +16,10 @@ export default function LogOutButton(){
     
     return (
 
-        <div>
+        <div className={style.iconContainer}>
     
-            <Image className={style.icon} src={logOut}  onClick={() => handleLogOut()}></Image>
-
+            <Image alt='log out button' className={style.icon} src={logOut}  onClick={() => handleLogOut()}></Image>
+            <span className={style.buttonText}>Log out</span>
             
         </div>
     )

@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import SelectLevel from "./selectLevel";
 import { useRouter } from 'next/navigation';
 import style from "./styles/dashboard.module.css"
+import { Instructions } from "./Instructions";
    
 export default function Dashboard(){
 
@@ -30,6 +31,9 @@ export default function Dashboard(){
                        <SelectLevel userId={user.id}></SelectLevel> 
                        <Logo></Logo>
                        <UserStatistics></UserStatistics>  
+                    </div>
+                    <div className={style.squaresContainer2}>
+                        <Instructions />
                     </div>
                     
                      

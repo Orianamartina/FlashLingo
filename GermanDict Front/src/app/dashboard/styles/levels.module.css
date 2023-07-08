@@ -11,8 +11,7 @@
 .levelDashboard{
     display: block;
     background-color: var(--2);
-    border: 1px solid black;
-    box-shadow: 3px 3px 0px;
+    box-shadow: 2px 2px 0px;
     width: 90%;
     height: fit-content;
     border-radius: 10px;

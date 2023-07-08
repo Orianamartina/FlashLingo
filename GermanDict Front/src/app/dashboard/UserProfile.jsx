@@ -1,7 +1,6 @@
 import LogOutButton from "./LogOutButton"
-import Image from "next/image";
-import userImg from "../../../public/user.png"
 import style from "./styles/user.module.css"
+import { ProfileButton } from "./ProfileButton";
 export default function UserProfile(props){
 
     let user = null;
@@ -16,17 +15,11 @@ export default function UserProfile(props){
 
         <div className={style.userProfileContainer}> 
             <div className={style.profileButtonsContainer}>
-                <div className={style.iconContainer}>
+
                   <LogOutButton></LogOutButton>
-                  <span className={style.buttonText}>Log out</span>
-                </div>
-                  
-               
-                <div className={style.iconContainer}>
-                  <Image className={style.icon} src={userImg}></Image>
-                  <span className={style.buttonText}>Profile</span>
-                </div>
-               
+              
+                  <ProfileButton></ProfileButton>
+            
             </div> 
           
             <div>

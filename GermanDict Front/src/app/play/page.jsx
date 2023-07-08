@@ -5,7 +5,7 @@ import {useState } from "react";
 import {  checkCard, endSession} from "./gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from 'next/navigation';
 
 
 export default function Play(){
@@ -58,14 +58,15 @@ export default function Play(){
     const [greenCardsEnd, setGreenCardsEnd] = useState()
     const endCurrentSession =async() =>{
         try {
-            setFinished(true)
             let sessionCards = endSession(cardsPlayed)
             setGreenCardsEnd(sessionCards.green_cards)
             setYellowCardsEnd(sessionCards.yellow_cards)
             setRedCardsEnd(sessionCards.red_cards)
+            console.log(sessionCards)
             const token = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials:true})
             const csrf = token.data.csrf_token
             const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: sessionCards, token: csrf})
+            console.log(saveSession.status)
             if (saveSession.status === 200) {
                 redirect('/dashboard')
             }
@@ -79,9 +80,9 @@ export default function Play(){
         <div>
             
             {finished?(<div><h1>Saving results</h1>
+                        {() => endCurrentSession}
                         <SessionStats yellow_cards={yellowCardsEnd} green_cards ={greenCardsEnd} red_cards={redCardsEnd}></SessionStats> </div>):(
                 <div>
-                   
                     <Cards
                         card={card} 
                         handleClick={handleClick} 
@@ -94,7 +95,6 @@ export default function Play(){
 
                 </div>)}
            
-            <h1>{error?error:""}</h1>
         </div>
         
     )

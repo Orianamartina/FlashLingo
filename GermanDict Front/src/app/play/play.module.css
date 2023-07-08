@@ -11,7 +11,7 @@
     transition: 1s;
 }
 .neutral{
-    background-color: var(--lightBlue);
+    background-color: var(--2);
     transition: 1s;
 }
 
@@ -62,7 +62,7 @@
     transform: rotateY(180deg);
 }
 .frontCard{
-    background-color: var(--lightBlue);
+    background-color: var(--2);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
