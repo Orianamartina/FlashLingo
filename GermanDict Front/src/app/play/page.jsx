@@ -61,7 +61,7 @@ export default function Play(){
     const [yellowCardsEnd, setYellowCardsEnd] = useState()
     const [greenCardsEnd, setGreenCardsEnd] = useState()
     const endCurrentSession =async() =>{
-        try {
+        try { 
             let sessionCards = endSession(cardsPlayed)
             setGreenCardsEnd(sessionCards.green_cards)
             setYellowCardsEnd(sessionCards.yellow_cards)

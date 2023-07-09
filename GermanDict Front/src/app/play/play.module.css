@@ -63,7 +63,7 @@
     transform: rotateY(180deg);
 }
 .frontCard{
-    background-color: var(--lila);
+    background-color: var(--lightBlue);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

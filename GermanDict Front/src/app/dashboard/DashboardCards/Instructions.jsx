@@ -1,4 +1,4 @@
-import style from "./styles/dashboard.module.css"
+import style from "../styles/dashboard.module.css"
 
 
 

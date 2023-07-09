@@ -1,6 +1,6 @@
 import Image from "next/image"
-import logo from "../../../public/logo.png"
-import style from "./styles/dashboard.module.css"
+import logo from "../../../../public/logo.png"
+import style from "../styles/dashboard.module.css"
 
 export default function Logo(){
     

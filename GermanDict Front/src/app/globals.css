@@ -1,23 +1,25 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600&display=swap');
 :root{
-    --green: #00c69e;
-    --yellow: #f5e45f;
-    --yellowshadow: #ada146;
-    --orange: #fd7a39;   
+    --green: #8ac926;
+    --yellow: #ffca3a;
+    --yellowshadow: #c49a27;
+    --orange: #ff595e;   
     --lightBlue: #07bdff;
     --pink: #fe51b0;
     --lila: #e2c1f3;
 
-
+ 
     --1: #eab0fc;
     --2: #aa4ff6;
     --3: #8d39ec;
     --4: #7827e6;
-
-    /* font */
-
-
+/*
+    font
+    --1: #BDD358;
+    --2: #b79cec;
+    --3: #6f5de7;
+ */
     --font2:'Cabin', sans-serif
 }
  

@@ -1,11 +1,11 @@
 "use client"
 import UserProfile from "./UserProfile"
 import UserStatistics from "./UserStatistics"
-import Logo from "./Logo";
+import Logo from "./DashboardCards/Logo"; 
 import SelectLevel from "./selectLevel";
 import { useRouter } from 'next/navigation';
 import style from "./styles/dashboard.module.css"
-import { Instructions } from "./Instructions";
+import { Instructions } from "./DashboardCards/Instructions";
    
 export default function Dashboard(){
 

@@ -53,11 +53,11 @@ export default function LoginForm(){
 
                 </input>
                 <label className={style.formLabel} >Password</label>
-                <input className={style.formInput} onChange={handleInputChange} placeholder="Password" name='password'>
+                <input className={style.formInput} type="password" onChange={handleInputChange} placeholder="Password" name='password'>
 
                 </input>
             </form>
-            <button className={style.loginButton} type='submit' form='form'>LogIn</button>
+            <button className={style.loginButton} type='submit' form='form'>Log In</button>
         
 
         </div>

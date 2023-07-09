@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import { getLevel } from "@/redux/actions";
 import { useState } from 'react';
 import {useDispatch} from "react-redux";
-import style from "./styles/levels.module.css"
+import style from "../styles/levels.module.css"
 import Image from 'next/image';
-import arrow from "../../../public/arrow-right.png"
+import arrow from "../../../../public/arrow-right.png"
 export default function LevelCard(props){
 
     const {push} = useRouter()
