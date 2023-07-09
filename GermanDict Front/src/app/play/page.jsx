@@ -5,6 +5,7 @@ import {useState } from "react";
 import {  checkCard, endSession} from "./gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
+import Link from "next/link";
 import { redirect } from 'next/navigation';
 
 
@@ -83,6 +84,7 @@ export default function Play(){
                         {() => endCurrentSession}
                         <SessionStats yellow_cards={yellowCardsEnd} green_cards ={greenCardsEnd} red_cards={redCardsEnd}></SessionStats> </div>):(
                 <div>
+                    <Link href={"/dashboard"}>{"<<"}</Link>
                     <Cards
                         card={card} 
                         handleClick={handleClick} 

@@ -1,17 +1,16 @@
 "use client"
 import 'regenerator-runtime/runtime'
 import { useEffect, useState } from "react";
-import { redirect } from "next/dist/server/api-utils";
+import Image from 'next/image';
 import style from "./play.module.css"
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
-
+import mic from "../../../public/microfono.png"
 export default function Cards(props){
    
     const [answer, setAnswer] = useState()
     const [startTime, setStartTime] = useState(null);
     const submitted = props.submitted
     const answerStatus = props.answerStatus
-    const [flipped, setFlipped] = useState(false)
 
     const {
         transcript,
@@ -45,8 +44,10 @@ export default function Cards(props){
         if (event.key === 'Enter') {
             if(answer.length > 0 && !submitted){
                 const elapsedTime = (Date.now() - startTime) / 1000
+    
                 props.handleClick(answer, elapsedTime);
                 setAnswer('');
+                resetTranscript()
             }
             
          
@@ -55,10 +56,22 @@ export default function Cards(props){
             if(submitted){
                 startTimer()
                 props.next()
+                resetTranscript
             }
             
         }
     };
+    const [micOn, setMicOn] = useState(false)
+    function controlMic(){
+        if(micOn){
+            SpeechRecognition.startListening({language: "en-US"})
+        }
+        else{
+            SpeechRecognition.stopListening 
+            setAnswer(transcript)
+        }
+
+    }
     //
     return(
         <div className={style.container}>
@@ -72,11 +85,17 @@ export default function Cards(props){
                         <button className={style.button} onClick={() =>{
                             const elapsedTime = (Date.now() - startTime) / 1000
                             props.handleClick(answer, elapsedTime);
-                            console.log(elapsedTime)
-                            console.log(answer)
-                            setAnswer('');}}>Check
+                            setAnswer('')
+                            resetTranscript();}}>Check
                             
-                        </button>
+                        </button>    
+                        <div className={`${allowMic? style.micEnabled: style.micDisabled} ${style.micContainer}`}>
+                            <p>Microphone: {listening ? 'on' : 'off'}</p>
+                           
+                                <Image src={mic} className={style.micButton} onClick={() =>     {setMicOn(!micOn); controlMic();         setAnswer(transcript)}}></Image>
+                            
+                            <p>{transcript}</p>
+                        </div>
                             
             </div> 
                     
@@ -90,7 +109,7 @@ export default function Cards(props){
                             <h1> "Good job, keep practicing!"</h1>:
                             answerStatus === "green"?
                             <h1>Well done!</h1>: ""
-                            }<button className={style.button} onClick={() => {props.next();  startTimer()}}>next</button>
+                            }<button className={style.button} onClick={() => {props.next();  startTimer();      resetTranscript}}>next</button>
                     </div>
 
                 </div>
@@ -98,13 +117,7 @@ export default function Cards(props){
                 
             </div>
             
-            <div className={`${allowMic? style.micEnabled: style.micDisabled} ${style.micContainer}`}>
-                <p>Microphone: {listening ? 'on' : 'off'}</p>
-                <button className={style.button} onClick={() =>SpeechRecognition.startListening({language: "en-US"})}>Listen</button>
-                <button className={style.button} onClick={() => {SpeechRecognition.stopListening, setAnswer(transcript)}}>Stop</button>
-                <button className={style.button} onClick={resetTranscript}>Reset</button>
-                <p>{transcript}</p>
-            </div>
+        
             
             
         </div>
