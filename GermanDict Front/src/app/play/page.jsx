@@ -6,11 +6,13 @@ import {  checkCard, endSession} from "./gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 import { redirect } from 'next/navigation';
 
 
 export default function Play(){
+    const {push} = useRouter()
     const cards = useSelector(state => state.gameSession)
     const id = useSelector(state => state.sessionId)
     const [cardsPlayed, setCardsPlayed] = useState([])
@@ -68,9 +70,8 @@ export default function Play(){
             const token = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials:true})
             const csrf = token.data.csrf_token
             const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: sessionCards, token: csrf})
-            console.log(saveSession.status)
             if (saveSession.status === 200) {
-                redirect('/dashboard')
+                push('/dashboard')
             }
         } catch (error) {
         

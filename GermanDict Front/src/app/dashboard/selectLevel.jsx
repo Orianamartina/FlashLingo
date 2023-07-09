@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LevelCard from "./levelCard";
+import LevelCard from "./DashboardCards/levelCard";
 import style from "./styles/levels.module.css"
 
 
