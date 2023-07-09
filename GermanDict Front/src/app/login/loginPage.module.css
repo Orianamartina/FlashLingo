@@ -22,12 +22,13 @@
     display: block;
     margin-top: 4%;
     margin-bottom: 4%;
-    border: 1px solid var(--3);
+    border: 1px solid black;
     border-radius: 10px;
     height: 6vh;
     width: 100%;
     font-size: 3vh;
     text-align: center;
+    
 }
 .formLabel{
     display: block;
@@ -46,13 +47,50 @@
     margin-top: 5vh;
     font-size: 3vh;
 }
+.notRegistered{
+    font-size: 2vh;
+}
+.registerLink{
+    font-size: 2vh;
+    color: var(--1);
+}
 .logo{
     width: 40vw;
     height: 40vw;
+    margin-top: 20%;
     margin-bottom: 20%;
     filter: drop-shadow(5px 5px 0px black);
     
 }
 @media (min-width:700px){
-
+    
+    .formContainer{
+        width: 30vw;
+    }
+    .logo{
+        width: 10vw;
+        height: 10vw;
+        margin-top: 3vh;
+        margin-bottom: 1vh;
+    }
+    .formLabel{
+        margin-bottom: 0.5vh;
+    }
+    .formInput{
+        margin-bottom: 0.5vh;
+    }
+    .loginButton{
+        transition: 0.5s;
+        height: 7vh;
+    }
+    .loginButton:hover{
+        cursor: pointer;
+        filter: drop-shadow(2px 2px 0px black);
+    }
+    .notRegistered{
+        font-size: 3vh;
+    }
+    .registerLink{
+        font-size: 3vh;
+    }
 }

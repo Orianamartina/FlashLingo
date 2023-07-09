@@ -1,6 +1,6 @@
 "use client";
 import axios from 'axios';
-
+import style from "./registerPage.module.css"
 export default function RegisterForm(){
     const handleSubmit = () => {
 
@@ -12,31 +12,31 @@ export default function RegisterForm(){
   
 
     return(
-        <div>
+        <div className={style.formContainer}>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="">First name</label>
-                <input onChange={handleInputChange} placeholder="First Name">
+                <label  className={style.registerLabel} htmlFor="">First name</label>
+                <input  className={style.registerInput} onChange={handleInputChange} placeholder="First Name">
 
                 </input>
-                <label htmlFor="">Last name</label>
-                <input onChange={handleInputChange} placeholder="Last name">
+                <label  className={style.registerLabel} htmlFor="">Last name</label>
+                <input  className={style.registerInput} onChange={handleInputChange} placeholder="Last name">
 
                 </input>
-                <label htmlFor="">Email</label>
-                <input onChange={handleInputChange} placeholder="Email">
+                <label  className={style.registerLabel} htmlFor="">Email</label>
+                <input  className={style.registerInput} onChange={handleInputChange} placeholder="Email">
 
                 </input>
-                <label>Password</label>
-                <input onChange={handleInputChange} placeholder="Password">
+                <label className={style.registerLabel} >Password</label>
+                <input className={style.registerInput}  onChange={handleInputChange} placeholder="Password">
 
                 </input>
-                <label htmlFor=""> Repeat password</label>
-                <input onChange={handleInputChange} placeholder="Repeat Password">
+                <label  className={style.registerLabel} htmlFor=""> Repeat password</label>
+                <input  className={style.registerInput} onChange={handleInputChange} placeholder="Repeat Password">
 
                 </input>
             </form>
 
-            <button>Register</button>
+            <button className={style.registerButton}>Register</button>
         </div>
     )
 }

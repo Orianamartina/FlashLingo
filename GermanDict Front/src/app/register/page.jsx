@@ -6,17 +6,19 @@ export default function Login(){
 
     
     return (
-        <div>
-            <h1>Register</h1>
+        <div className={style.container}>
+            <h1 className={style.text}>Register</h1>
             <RegisterForm></RegisterForm>
          
         
             <div>
 
-                <h3 className={style.text} >Already registered?</h3>
-                <Link href={"/login"}>
-                    Login
-                </Link>
+                <h3 className={style.text} >Already registered? &nbsp;
+                    <Link className={style.loginLink} href={"/login"}>
+                        Login
+                    </Link>
+                </h3>
+                
             </div>
             
         </div>

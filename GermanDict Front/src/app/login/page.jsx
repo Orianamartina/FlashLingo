@@ -24,10 +24,11 @@ export default function Login(){
 
                     <div>
 
-                        <h3>Not registered?</h3>
-                        <Link href={"/register"}>
-                            Create account
-                        </Link>
+                        <h3 className={style.notRegistered}>Not registered? &nbsp; 
+                            <Link className={style.registerLink} href={"/register"}>
+                                Create account
+                            </Link>
+                        </h3>
                     </div>
                 
                 </div>
