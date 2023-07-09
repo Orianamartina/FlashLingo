@@ -11,10 +11,13 @@
 
     
 }
+.form{
+    width: 100%;
+}
 .formContainer{
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 90%;
   
 }
 

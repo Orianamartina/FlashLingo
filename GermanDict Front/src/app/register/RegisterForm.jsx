@@ -13,7 +13,7 @@ export default function RegisterForm(){
 
     return(
         <div className={style.formContainer}>
-            <form onSubmit={handleSubmit}>
+            <form className={style.form} onSubmit={handleSubmit}>
                 <label  className={style.registerLabel} htmlFor="">First name</label>
                 <input  className={style.registerInput} onChange={handleInputChange} placeholder="First Name">
 

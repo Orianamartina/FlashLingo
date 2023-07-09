@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     text-align: center;
-    height: 98vh;
+    height: 100%;
     background-color: var(--4);
     margin-top: 0;
     display: flex;
@@ -17,16 +17,45 @@
 }
 .registerLabel{
     display: block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    font-size: 2vh;
+
 }
 .registerInput{
+    display: block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 5vh;
+    width: 100%;
+    font-size: 2vh;
     text-align: center;
+    
+
 }
 .text{
     margin-top: 3vh;
     margin-bottom: 3vh;
 }
-
-
+.logo{
+    width: 40vw;
+    height: 40vw;
+    margin-top: 20%;
+    margin-bottom: 5%;
+    filter: drop-shadow(5px 5px 0px black);
+}
+.registerButton{
+    background-color: var(--1);
+    border: 1px solid black;
+    box-shadow: 3px 3px 0px black;
+    border-radius: 10px;
+    height: 5vh;
+    width: 100%;
+    margin-top: 5vh;
+    font-size: 3vh;
+}
 @media (min-width:700px){
 
 
