@@ -42,13 +42,17 @@
 
 @media (min-width:700px) {
     .logo{
-        filter: drop-shadow(2px 2px 0px);
         width: 15vw;
         color: black;
         height: 15vw;
-        border: 1px solid black;
         border-radius: 10px;
+        filter: drop-shadow(5px 5px 0px black);
+        transition: 0.5s;
         
+    }
+    .logo:hover{
+        cursor: pointer;
+        filter: drop-shadow(7px 7px 0px black);
     }
     .squaresContainer{
         flex-direction: row;
@@ -57,6 +61,11 @@
     .howToContainer{
         width: 15vw;
         height: 15vw;
+        transition: 0.5s;
+    }
+    .howToContainer:hover{
+        cursor: pointer;
+        box-shadow: 4px 4px 0px black;
     }
     .howto{
         font-size: 2vw;
