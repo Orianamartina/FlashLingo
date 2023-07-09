@@ -21,6 +21,7 @@
 .logo{
     width: 60vw;
     height: 60vw;
+    filter: drop-shadow(5px 5px 0px black);
 
 }
 .howToContainer{
@@ -46,7 +47,7 @@
         color: black;
         height: 15vw;
         border-radius: 10px;
-        filter: drop-shadow(5px 5px 0px black);
+
         transition: 0.5s;
         
     }
