@@ -1,6 +1,6 @@
 "use client"
 import 'regenerator-runtime/runtime'
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import Image from 'next/image';
 import style from "./play.module.css"
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition";
@@ -80,7 +80,7 @@ export default function Cards(props){
                     <div className={style.frontCard}>
                         <h1 className={style.word}>{props.card.word}</h1>
                         
-                        <input className={style.input} type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
+                        <input className={style.input} autoFocus type="text" value={answer} onChange={(e) => handleInputChange(e)} onKeyDown={(e) =>handleKeyPress(e, answer, setAnswer)}/>
                     
                         <button className={style.button} onClick={() =>{
                             const elapsedTime = (Date.now() - startTime) / 1000
