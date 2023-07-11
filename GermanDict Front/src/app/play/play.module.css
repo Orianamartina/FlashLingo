@@ -21,24 +21,25 @@
     padding: 0;
     width: 100%;
     height: 100vh;
-    display: block;
-    background-color: white;
+    background-color: var(--4);
+    padding-top: 5%;
     
 }
 .cardContainer{
     background-color: transparent;
     margin: auto;
-    margin-top: 50%;
+    margin-top: 20%;
     max-width: 80vw;
-    height: 30vh;
+    height: 60vh;
     perspective: 1000px;
+    
     
 }
 
 .innerCard {
     position: relative;
     max-width: 100%;
-    height: 70vw;
+    height: 60vh;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
@@ -55,15 +56,19 @@
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
     margin: auto;
-    box-shadow: 2px 2px 0px;
+    box-shadow: 2px 2px 0px black;
     border-radius: 10px;
+    border: 1px solid black;
 }
 .backCard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     color: white;
     transform: rotateY(180deg);
 }
 .frontCard{
-    background-color: var(--lightBlue);
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -75,9 +80,12 @@
     border: none;
     text-align: center;
     font-size: 4vh;
+    border-bottom: 2px solid black;
+    margin-bottom: 5%;
+    width: 80%;
+
 }
 .input:focus{
-    border: none;
     outline: none;
 }
 
@@ -92,26 +100,27 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    height: 15vh;
     margin: auto;
     margin-top: 5%; 
     margin-bottom: 0;
 }
 .micDisabled{
     pointer-events: none;
-    height: 100%;
+    height: 15vh;
     /* for "disabled" effect */
     opacity: 0.5;
     background: #CCC;
 }
 .button{
-    border: none;
+    border: 1px solid black;
     border-radius: 10px;
     font-size: 6vw;
     padding: 2%;
     width: fit-content;
-    background-color: var(--yellow);
-    width: 80%;
-    box-shadow: inset -5px -5px 0 var(--yellowshadow);
+    background-color: var(--1);
+    box-shadow: 5px 5px 0 black;
+    width: 60%;
 }
 .button:hover{
     cursor: pointer;
@@ -120,34 +129,62 @@
     height: 10vw;
     width: 10vw;
 }
+.answerResult{
+    margin-top: 12%;
+    height: 40%;
+    margin-bottom: 5%;
+}
+.logo{
+    margin: auto;
+    width: 30vw;
+    height: 30vw;
+    display: block;
+}
+.backButton{
+    background-color: var(--1);
+    border: 1px solid black;
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+    margin-top: 5%;
+    padding: 2%;
+    width: 50%;
+    text-decoration: none;
+}
 @media (min-width: 700px)  {
-    .container{
-        height: 80vh;
-    }
+
     .cardContainer{
-        margin-top: 10%;
+        margin-top: 5%;
         width: 50%;
-        height: 60vh;
+        height: 70vh;
         
+        
+    }
+    .answerResult{
+        margin-top: 5%;
+    }
+    .answerResult h2{
+        line-height: 50%;
     }
     .frontCard{
-        height: 60vh;
-
+        height: 70vh;
+        border: 1.5px solid black;
     }
     .innerCard{
-        height: 60vh;
+        height: 70vh;
     }
     .backCard{
-        height: 60vh;
-        
-    }
-    .micContainer{
-        margin: 10%;
+        height: 70vh;
+        font-size: 2.8vh;
     }
     .button{
-        font-size: 2vw;
+        font-size: 1.5vw;
         width: 50%;
-
+        transition: 0.5s;
+        
+    }
+    .button:hover{
+        box-shadow: 7px 7px 0 black;
     }
     .micButton{
         height: 4vw;
@@ -155,6 +192,7 @@
     }
     .micContainer{
         margin: 0;
+        font-size: 2vh;
     }
     
     

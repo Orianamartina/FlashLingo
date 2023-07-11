@@ -74,7 +74,7 @@ export default function Cards(props){
     }
     //
     return(
-        <div className={style.container}>
+        <div>
             <div className={`${style.cardContainer} ${submitted? style.flipped: ""}`}>
                 <div className={style.innerCard}>
                     <div className={style.frontCard}>
@@ -100,16 +100,21 @@ export default function Cards(props){
             </div> 
                     
                     <div className={`${style.backCard} ${style[answerStatus]}` }>
-                        {answerStatus === "red"?
-                            <div>
-                                <h1>Right Answers:</h1>
-                                <h1>{props.card.translation1}</h1>
-                            </div>
-                             : answerStatus === "yellow"? 
-                            <h1> "Good job, keep practicing!"</h1>:
-                            answerStatus === "green"?
-                            <h1>Well done!</h1>: ""
-                            }<button className={style.button} onClick={() => {props.next();  startTimer();      resetTranscript}}>next</button>
+                        <div className={style.answerResult}>
+                            {answerStatus === "red"?
+                                <div>
+                                    <h1>Try Again!</h1>
+                                    <h2>- {props.card.translation1}</h2>
+                                    <h2> {props.card.translation2 != "null"? "- " + props.card.translation2: ""}</h2>
+                                    <h2> {props.card.translation3 != "null"? "- " + props.card.translation3: ""}</h2>
+                                </div>
+                                : answerStatus === "yellow"? 
+                                <h1> "Good job, keep practicing!"</h1>:
+                                answerStatus === "green"?
+                                <h1>Well done!</h1>: ""
+                                }
+                        </div>
+                        <button className={`${style.button} ${style.backButton}`} onClick={() => {props.next();  startTimer();      resetTranscript}}>next</button>
                     </div>
 
                 </div>

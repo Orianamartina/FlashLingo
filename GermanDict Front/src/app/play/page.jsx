@@ -1,15 +1,15 @@
 "use client"
 import Cards from "./cards"
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useState } from "react";
 import {  checkCard, endSession} from "./gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-
-import { redirect } from 'next/navigation';
-
+import style from "./play.module.css"
+import Image from "next/image";
+import logo from "../../../public/logo.png"
 
 export default function Play(){
     const {push} = useRouter()
@@ -80,14 +80,15 @@ export default function Play(){
     }
     let card = cards[index]
     return (
-        <div>
+        <div >
             
             {finished?(<div><h1>Saving results</h1>
                         {() => endCurrentSession}
                         <SessionStats yellow_cards={yellowCardsEnd} green_cards ={greenCardsEnd} red_cards={redCardsEnd}></SessionStats> </div>):(
-                <div>
+                <div className={style.container}>
+                    <Image className={style.logo} src={logo} alt="logo"></Image>
                   
-                    <Link href={"/dashboard"}><button> {"<<"}</button></Link>
+                    <Link href={"/dashboard"} ><button className={style.backButton}> {"<<"}</button></Link>
                        
                     <Cards
                         card={card} 
