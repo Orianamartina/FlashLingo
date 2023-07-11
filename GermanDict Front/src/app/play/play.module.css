@@ -28,7 +28,7 @@
 .cardContainer{
     background-color: transparent;
     margin: auto;
-    margin-top: 20%;
+    margin-top: 10%;
     max-width: 80vw;
     height: 60vh;
     perspective: 1000px;
@@ -139,22 +139,15 @@
     width: 30vw;
     height: 30vw;
     display: block;
+    filter: drop-shadow(3px 3px 0px black);
 }
-.backButton{
-    background-color: var(--1);
-    border: 1px solid black;
-    border-radius: 10px;
-    display: block;
-    margin: auto;
-    margin-top: 5%;
-    padding: 2%;
-    width: 50%;
-    text-decoration: none;
-}
-@media (min-width: 700px)  {
 
+@media (min-width: 700px)  {
+    .container{
+        padding-top: 0%;
+    }
     .cardContainer{
-        margin-top: 5%;
+        margin-top: 0%;
         width: 50%;
         height: 70vh;
         
@@ -194,6 +187,16 @@
         margin: 0;
         font-size: 2vh;
     }
-    
+    .logo{
+        display: inline;
+        width: 7vw;
+        height: 7vw;
+        margin-top: 2%;
+        margin-left: 2%;
+        transition: 0.5s;
+    }
+    .logo:hover{
+        filter: drop-shadow(4px 4px 0px black);
+    }
     
 }

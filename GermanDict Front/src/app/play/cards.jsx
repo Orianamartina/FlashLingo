@@ -114,7 +114,7 @@ export default function Cards(props){
                                 <h1>Well done!</h1>: ""
                                 }
                         </div>
-                        <button className={`${style.button} ${style.backButton}`} onClick={() => {props.next();  startTimer();      resetTranscript}}>next</button>
+                        <button className={`${style.button}`} onClick={() => {props.next();  startTimer();      resetTranscript}}>next</button>
                     </div>
 
                 </div>

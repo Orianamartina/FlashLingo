@@ -86,9 +86,9 @@ export default function Play(){
                         {() => endCurrentSession}
                         <SessionStats yellow_cards={yellowCardsEnd} green_cards ={greenCardsEnd} red_cards={redCardsEnd}></SessionStats> </div>):(
                 <div className={style.container}>
-                    <Image className={style.logo} src={logo} alt="logo"></Image>
+                    
                   
-                    <Link href={"/dashboard"} ><button className={style.backButton}> {"<<"}</button></Link>
+                    <Link href={"/dashboard"}><Image className={style.logo} src={logo} alt="logo"/></Link>
                        
                     <Cards
                         card={card} 
@@ -98,7 +98,6 @@ export default function Play(){
                         answerStatus ={answerStatus}>
                         
                     </Cards>
-                    {translation.length? translation.map(translation => {if(translation != null){<h1>{translation}</h1>}}): ""}
 
                 </div>)}
            
