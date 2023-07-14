@@ -31,12 +31,16 @@ export default function LevelCard(props){
     
     return (
 
-        <div className={style.levelButtonOptions}>
-
-            <Image onClick={handleLevelDown} className={style.arrow1} src={arrow}></Image>
-            <button className={style.levelButton} onClick={() => handleLevelClick(index)}>{index}</button>
-            <Image onClick={handleLevelUp} className={style.arrow2} src={arrow}></Image>
-            
+        <div className={style.levelDashboard}>
+            <h1 className={style.levelText}>Choose a level</h1>
+            <div className= {style.levelButtonOptions}>
+               
+                <Image onClick={handleLevelDown} className={style.arrow1} src={arrow}></Image>
+                <h1 className={style.level}>{index}</h1>
+                <Image onClick={handleLevelUp} className={style.arrow2} src={arrow}></Image>
+            </div>
+         
+            <button className={style.levelButton} onClick={() => handleLevelClick(index)}>Play</button>
             
             
         </div>

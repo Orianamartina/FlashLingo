@@ -35,8 +35,8 @@
         flex-direction: row-reverse;
     }
     .icon{
-        width: 3vw;
-        height: 3vw;
+        width: 2vw;
+        height: 2vw;
         padding: 0%; 
         border-radius: 50%;
         transition: ease-in 0.5s;
@@ -44,16 +44,17 @@
     .iconContainer{
         display: flex;
         padding-left: 1vw;
-        height: 5vw;
+        height: 3vw;
         align-items: center;
-        width: 15vw;
+        width: 10vw;
         border-radius: 13%/50%;
         transition:  ease-in-out 0.5s;
-        background: linear-gradient(to right, var(--4), white 50%);
+        background: linear-gradient(to right, var(--4), white 60%);
         background-size: 200% 100%;
         background-position: right bottom;
         transition: all .5s ease-out;
-        margin-right: 2vw;
+        margin-right: 1vw;
+        margin-top: 2%;
     }
     .iconContainer:hover{
         cursor: pointer;
@@ -72,7 +73,7 @@
 
     }*/
     .username{
-        font-size: 2vw;
+        font-size: 1.5vw;
         margin-left: 2%;
     }
 }

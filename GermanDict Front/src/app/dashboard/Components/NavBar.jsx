@@ -1,7 +1,7 @@
 import LogOutButton from "./LogOutButton"
-import style from "./styles/user.module.css"
+import style from "../styles/navBar.module.css"
 import { ProfileButton } from "./ProfileButton";
-export default function UserProfile(props){
+export default function NavBar(props){
 
     let user = null;
     try {

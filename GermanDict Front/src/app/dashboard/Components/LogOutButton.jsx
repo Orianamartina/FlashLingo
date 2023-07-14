@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import logOut from "../../../public/log-out.png"
-import style from "./styles/user.module.css"
+import logOut from "../../../../public/log-out.png"
+import style from "../styles/navBar.module.css"
 export default function LogOutButton(){
 
     const {push} = useRouter()
@@ -16,9 +16,9 @@ export default function LogOutButton(){
     
     return (
 
-        <div className={style.iconContainer}>
+        <div onClick={() => handleLogOut()} className={style.iconContainer}>
     
-            <Image alt='log out button' className={style.icon} src={logOut}  onClick={() => handleLogOut()}></Image>
+            <Image alt='log out button' className={style.icon} src={logOut}  ></Image>
             <span className={style.buttonText}>Log out</span>
             
         </div>

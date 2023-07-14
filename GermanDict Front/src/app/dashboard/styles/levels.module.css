@@ -1,7 +1,11 @@
 .levelButton{
     border: none;
-    font-size: 8vh;
-    background-color: transparent;
+    font-size: 3vh;
+    background-color: white;
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 3px 3px 0 black;
     
 }
 .levelButton:hover{
@@ -9,7 +13,9 @@
 }
 
 .levelDashboard{
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     background-color: var(--2);
     box-shadow: 2px 2px 0px;
     width: 90%;
@@ -21,13 +27,15 @@
 
 }
 .levelButtonOptions{
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 .levelText{
-    font-size: 6vw;
+    font-size: 7vw;
     color: white;
+    margin: 0;
 }
 .arrow1, .arrow2{
     width: 10vw;
@@ -41,10 +49,15 @@
 .arrow1{
     rotate: 180deg;
 }
+.level{
+    font-size: 4vh;
+
+}
 @media (min-width: 700px) {
     .levelButton{
-        font-size: 4vw;
+        font-size: 2vw;
         border: none;     
+        transition: 0.3s;
     }
     .arrow1, .arrow2{
         height: 3vw;
@@ -52,9 +65,10 @@
     }
     .levelButton:hover{
         cursor: pointer;
+        box-shadow: 4px 4px 0px;
     }
     .levelDashboard{
-        max-width: 30%;
+        max-width: 25%;
         max-height: 50vh;
         display: flex;
         flex-direction: column;
@@ -67,7 +81,9 @@
         box-shadow: 4px 4px 0px;
     }
     .levelText{
-        font-size: 3vw;
-
+        font-size: 2vw;
+    }
+    .level{
+        font-size: 2.5vw;
     }
 }

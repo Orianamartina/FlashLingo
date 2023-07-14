@@ -1,6 +1,6 @@
-import style from "./styles/user.module.css"
+import style from "../styles/navBar.module.css"
 import Image from "next/image";
-import userImg from "../../../public/user.png"
+import userImg from "../../../../public/user.png"
 
 export const ProfileButton = () => {
     
