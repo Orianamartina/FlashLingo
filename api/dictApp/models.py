@@ -18,12 +18,11 @@ class GermanWord(models.Model):
         return self.word
 class UserStatistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    last_day_played = models.DateField
     days_streak = models.IntegerField(default=0)
     longest_streak = models.IntegerField(default=0)
-
+    last_day_played = models.DateField()
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class GameSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)

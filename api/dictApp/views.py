@@ -21,8 +21,8 @@ from django.views.decorators.csrf import csrf_protect
 #cookie management
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 import json
-from datetime import timedelta
-
+from datetime import timedelta, date
+from django.utils import timezone
 # Create your views here. endpoints
 @api_view(['GET', 'POST'])
 
@@ -221,15 +221,19 @@ def update_game_session(request, session_id):
     
 
 def updateUserStatistics(request, userId):
-    if request.method == 'POST':
+    if request.method == 'GET':  
+        today = timezone.now().date()
+        user = User.objects.get(id = userId)
+        stats = ""
         try:
-            userStats = UserStatistics.objects.get(id=userId)
+            stats = UserStatistics.objects.get(id=userId)
+            
         except UserStatistics.DoesNotExist:
         # Create a new UserStatistics object if it doesn't exist
+
             stats = UserStatistics.objects.create(user=user, last_day_played=today)
 
-        userData =  json.loads(request.body)
-        today = timezone.now().date()
+      
 
         if stats.last_day_played == today - timedelta(days=1):
             # If last played day is the previous day, update streak and longest streak

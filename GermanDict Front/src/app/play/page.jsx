@@ -12,6 +12,7 @@ import Image from "next/image";
 import logo from "../../../public/logo.png"
 
 export default function Play(){
+    const  user = JSON.parse(localStorage.getItem("user"));
     const {push} = useRouter()
     const cards = useSelector(state => state.gameSession)
     const id = useSelector(state => state.sessionId)
@@ -70,7 +71,7 @@ export default function Play(){
             setRedCardsEnd(sessionCards.red_cards)
             const token = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials:true})
             const csrf = token.data.csrf_token
-            const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: sessionCards, token: csrf})
+            const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: sessionCards, token: csrf, userId: user.id})
             if (saveSession.status === 200) {
                 push('/dashboard')
             }
