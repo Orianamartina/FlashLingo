@@ -242,5 +242,6 @@ def updateUserStatistics(request, userId):
         
         stats.last_day_played = today
         stats.save()
+        return JsonResponse({"success": "Day streak updated successfully."})
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
