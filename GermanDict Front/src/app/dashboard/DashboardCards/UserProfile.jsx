@@ -3,7 +3,7 @@
 const UserProfile = () => {
   return (
     <div>
-        
+
     </div>
   )
 }

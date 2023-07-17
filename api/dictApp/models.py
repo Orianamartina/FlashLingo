@@ -18,17 +18,12 @@ class GermanWord(models.Model):
         return self.word
 class UserStatistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    guess_ratio = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    last_day_played = models.DateField
     days_streak = models.IntegerField(default=0)
-    words_learned = models.IntegerField(default=0)
-    total_attempts = models.IntegerField(default=0)
-    correct_attempts = models.IntegerField(default=0)
-    incorrect_attempts = models.IntegerField(default=0)
-    average_response_time = models.DurationField(null=True, blank=True)
     longest_streak = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.username
+        return self.user
 
 class GameSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)

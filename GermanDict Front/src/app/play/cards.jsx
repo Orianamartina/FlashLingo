@@ -12,6 +12,7 @@ export default function Cards(props){
     const submitted = props.submitted
     const answerStatus = props.answerStatus
 
+    //mic config
     const {
         transcript,
         listening,
@@ -21,15 +22,12 @@ export default function Cards(props){
     const [allowMic, setAllowMic] = useState()
    
 
-
+    //timer for word
     const startTimer = () => {
       setStartTime(Date.now());
     };
   
-    function handleInputChange(e){
-        setAnswer(e.target.value)
-    }
-    
+     
     useEffect(() => {
         startTimer(); 
         if (!browserSupportsSpeechRecognition) {
@@ -39,6 +37,10 @@ export default function Cards(props){
             setAllowMic(true)
         }
     }, []);
+    
+    function handleInputChange(e){
+        setAnswer(e.target.value)
+    }
 
     const handleKeyPress = (event, answer, setAnswer) => {
         if (event.key === 'Enter') {
@@ -61,6 +63,8 @@ export default function Cards(props){
             
         }
     };
+
+    
     const [micOn, setMicOn] = useState(false)
     function controlMic(){
         if(micOn){

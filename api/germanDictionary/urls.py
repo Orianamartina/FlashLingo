@@ -18,6 +18,7 @@ urlpatterns = [
     path('getgamesession/', views.getGameSession),
     path('csrf_token/', views.getCSRFToken),
     path('game-session/update/<int:session_id>/', views.update_game_session, name='update_game_session'),
+    path('user-statistics/<int:userId>/', views.updateUserStatistics, name='updateUserStatistics' )
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

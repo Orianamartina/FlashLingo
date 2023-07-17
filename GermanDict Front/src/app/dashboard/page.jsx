@@ -1,6 +1,5 @@
 "use client"
 import NavBar from "./Components/NavBar"
-import UserStatistics from "./Components/UserStatistics"
 import Logo from "./DashboardCards/Logo"; 
 import { useRouter } from 'next/navigation';
 import style from "./styles/dashboard.module.css"
@@ -45,11 +44,7 @@ export default function Dashboard(){
                         />
 
                     </div>
-                    
-                    
-                     
-                    
-                    
+
                 </>
             )
             

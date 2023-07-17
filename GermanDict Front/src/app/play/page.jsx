@@ -2,7 +2,7 @@
 import Cards from "./cards"
 import {useSelector} from "react-redux";
 import {useState } from "react";
-import {  checkCard, endSession} from "./gameplay";
+import {  checkCard, endSession} from "../utils/gameplay";
 import SessionStats from "./sessionStats";
 import axios from "axios";
 import Link from "next/link";
@@ -21,6 +21,8 @@ export default function Play(){
     const [translation, setTranslation] = useState("")
     const [submitted, setSubmitted] = useState(false)
     const [answerStatus, setAnswerStatus] = useState()
+
+
     const handleClick = (answer, time) => {
         let card = cards[index]
         const points = checkCard(card, answer, time)
@@ -56,17 +58,16 @@ export default function Play(){
         setTranslation([])
 
     }
-    const [error, setError]=useState()
     const [redCardsEnd, setRedCardsEnd] = useState()
     const [yellowCardsEnd, setYellowCardsEnd] = useState()
     const [greenCardsEnd, setGreenCardsEnd] = useState()
+
     const endCurrentSession =async() =>{
         try { 
             let sessionCards = endSession(cardsPlayed)
             setGreenCardsEnd(sessionCards.green_cards)
             setYellowCardsEnd(sessionCards.yellow_cards)
             setRedCardsEnd(sessionCards.red_cards)
-            console.log(sessionCards)
             const token = await axios.get(`http://127.0.0.1:8000/csrf_token/`, {withCredentials:true})
             const csrf = token.data.csrf_token
             const saveSession = await axios.post("http://localhost:3000/api/saveSession",{sessionId: id, body: sessionCards, token: csrf})

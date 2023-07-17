@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .models import GermanWord, GameSession
+from .models import GermanWord, GameSession, UserStatistics
 from .serializers import GermanWordSerializer, UserSerializer, GameSessionSerializer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth.decorators import login_required
@@ -21,6 +21,7 @@ from django.views.decorators.csrf import csrf_protect
 #cookie management
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 import json
+from datetime import timedelta
 
 # Create your views here. endpoints
 @api_view(['GET', 'POST'])
@@ -146,7 +147,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
-@api_view(['GET', 'PUT','POST'])
+@api_view(['POST'])
 
 def setUpGameSessions(request):
     if request.method == 'POST':
@@ -169,8 +170,7 @@ def setUpGameSessions(request):
 
 def getGameSession(request):
     if request.method == 'GET':
-      
-        #data = json.loads(request.body)
+
         level = request.GET.get('level')
         user_id = request.GET.get('user')
         try:
@@ -216,5 +216,31 @@ def update_game_session(request, session_id):
             return JsonResponse({'success': 'Game session updated'}, status=200)
         except GameSession.DoesNotExist:
             return JsonResponse({'error': 'Game session not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    
+
+def updateUserStatistics(request, userId):
+    if request.method == 'POST':
+        try:
+            userStats = UserStatistics.objects.get(id=userId)
+        except UserStatistics.DoesNotExist:
+        # Create a new UserStatistics object if it doesn't exist
+            stats = UserStatistics.objects.create(user=user, last_day_played=today)
+
+        userData =  json.loads(request.body)
+        today = timezone.now().date()
+
+        if stats.last_day_played == today - timedelta(days=1):
+            # If last played day is the previous day, update streak and longest streak
+            stats.days_streak += 1
+        if stats.days_streak > stats.longest_streak:
+            stats.longest_streak = stats.days_streak
+        else:
+            # Reset streak to 1
+             stats.days_streak = 1
+        
+        stats.last_day_played = today
+        stats.save()
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
