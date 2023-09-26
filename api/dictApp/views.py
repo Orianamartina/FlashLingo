@@ -1,25 +1,22 @@
-from django.contrib.auth import login, authenticate
+
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import GermanWord, GameSession, UserStatistics
 from .serializers import GermanWordSerializer, UserSerializer, GameSessionSerializer
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import status
-from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.decorators import authentication_classes, permission_classes
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_protect
 #cookie management
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.views.decorators.csrf import  csrf_protect
 import json
 from datetime import timedelta, date
 from django.utils import timezone

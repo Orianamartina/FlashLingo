@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-
+from django.utils import timezone
 class GermanWord(models.Model): 
     id = models.IntegerField(primary_key=True)
     word = models.CharField(max_length=200)
@@ -20,7 +20,7 @@ class UserStatistics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     days_streak = models.IntegerField(default=0)
     longest_streak = models.IntegerField(default=0)
-    last_day_played = models.DateField()
+    last_day_played = models.DateField(default=timezone.now)
     def __str__(self):
         return self.user.username
 

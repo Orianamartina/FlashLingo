@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from dotenv import dotenv_values
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
 env_vars = dotenv_values()
 
 
@@ -159,16 +160,17 @@ WSGI_APPLICATION = 'germanDictionary.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  env_vars.get('NAME'),
-        'USER':  env_vars.get('USER'),
-        'PASSWORD':  env_vars.get('PASSWORD'),
-        'HOST':  env_vars.get('HOST'),
-        'PORT':  env_vars.get('PORT')
-        
-    }
-}
+    "default": dj_database_url.parse(env_vars.get("DATABASE_URL"))}
+"""'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME':  env_vars.get('NAME'),
+    'USER':  env_vars.get('USER'),
+    'PASSWORD':  env_vars.get('PASSWORD'),
+    'HOST':  env_vars.get('HOST'),
+    'PORT':  env_vars.get('PORT')
+    
+}"""
+
 
 
 # Password validation
